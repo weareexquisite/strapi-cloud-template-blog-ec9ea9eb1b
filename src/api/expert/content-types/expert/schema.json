@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "experts",
+  "info": {
+    "singularName": "expert",
+    "pluralName": "experts",
+    "displayName": "Expert",
+    "description": "Author/expert E-E-A-T entities migrated from WP CPT \"experts\""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "wp_id": {
+      "type": "integer",
+      "required": true,
+      "unique": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "designation": {
+      "type": "string"
+    },
+    "photo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "socialMediaLinks": {
+      "type": "json"
+    },
+    "bio": {
+      "type": "text"
+    }
+  }
+}

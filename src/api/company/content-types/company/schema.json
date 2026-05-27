@@ -1,0 +1,152 @@
+{
+  "kind": "collectionType",
+  "collectionName": "companies",
+  "info": {
+    "singularName": "company",
+    "pluralName": "companies",
+    "displayName": "Company",
+    "description": "Financial-services companies migrated from WP CPT \"company\""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "wp_id": {
+      "type": "integer",
+      "required": true,
+      "unique": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "website": {
+      "type": "string"
+    },
+    "buttonLink": {
+      "type": "string"
+    },
+    "buttonText": {
+      "type": "string"
+    },
+    "linkTarget": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "phone2": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "hoAddress": {
+      "type": "text"
+    },
+    "amount": {
+      "type": "string"
+    },
+    "loanOfferedInfo": {
+      "type": "string"
+    },
+    "canadianStates": {
+      "type": "json"
+    },
+    "cities": {
+      "type": "json"
+    },
+    "howLongInBusiness": {
+      "type": "string"
+    },
+    "howManyBranches": {
+      "type": "string"
+    },
+    "numberOfCustomers": {
+      "type": "string"
+    },
+    "totalFunded": {
+      "type": "string"
+    },
+    "availability": {
+      "type": "string"
+    },
+    "callCenterTiming": {
+      "type": "string"
+    },
+    "physicalLocations": {
+      "type": "text"
+    },
+    "facebook": {
+      "type": "string"
+    },
+    "twitter": {
+      "type": "string"
+    },
+    "instagram": {
+      "type": "string"
+    },
+    "linkedIn": {
+      "type": "string"
+    },
+    "youtube": {
+      "type": "string"
+    },
+    "pinterest": {
+      "type": "string"
+    },
+    "introVideo": {
+      "type": "text"
+    },
+    "addFaqToThePage": {
+      "type": "boolean",
+      "default": false
+    },
+    "faqContent": {
+      "type": "component",
+      "repeatable": true,
+      "component": "lender.faq-item"
+    },
+    "loanOffered": {
+      "type": "component",
+      "repeatable": true,
+      "component": "company.loan-offered"
+    },
+    "supportOffer": {
+      "type": "component",
+      "repeatable": true,
+      "component": "lender.support-offer"
+    },
+    "videos": {
+      "type": "component",
+      "repeatable": true,
+      "component": "lender.video"
+    },
+    "companyCategories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::category.category"
+    },
+    "primaryCompanyCategory": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::category.category"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}

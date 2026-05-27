@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "testimonials",
+  "info": {
+    "singularName": "testimonial",
+    "pluralName": "testimonials",
+    "displayName": "Testimonial",
+    "description": "Site testimonials migrated from WP CPT \"testimonials\""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "wp_id": {
+      "type": "integer",
+      "required": true,
+      "unique": true
+    },
+    "reviewerName": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "reviewTitle": {
+      "type": "string"
+    },
+    "review": {
+      "type": "text"
+    },
+    "displayOnHomepage": {
+      "type": "boolean",
+      "default": false
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    }
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "kind": "singleType",
+  "collectionName": "homepage",
+  "info": {
+    "singularName": "homepage",
+    "pluralName": "homepages",
+    "displayName": "Homepage",
+    "description": "Front-page content (hero, why-choose, deals, reviews, FAQ). Dynamic lists queried by frontend."
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "heroReviewsText": {
+      "type": "string"
+    },
+    "googleRating": {
+      "type": "string"
+    },
+    "heroTrustedByText": {
+      "type": "string"
+    },
+    "productsList": {
+      "type": "component",
+      "repeatable": true,
+      "component": "home.product-link"
+    },
+    "trustedByLogos": {
+      "type": "component",
+      "repeatable": true,
+      "component": "home.trusted-logo"
+    },
+    "findLoansTitle": {
+      "type": "string"
+    },
+    "findLoansApplyCtaTitle": {
+      "type": "string"
+    },
+    "findLoansApplyCtaUrl": {
+      "type": "string"
+    },
+    "whyTitle": {
+      "type": "string"
+    },
+    "whyImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "whyPoints": {
+      "type": "component",
+      "repeatable": true,
+      "component": "home.text-point"
+    },
+    "dealWithImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "dealWithTitle": {
+      "type": "string"
+    },
+    "dealWithText": {
+      "type": "text"
+    },
+    "moreTitle": {
+      "type": "string"
+    },
+    "moreImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "moreItems": {
+      "type": "component",
+      "repeatable": true,
+      "component": "home.more-item"
+    },
+    "reviewsTitle": {
+      "type": "string"
+    },
+    "reviewsText": {
+      "type": "text"
+    },
+    "faqTitle": {
+      "type": "string"
+    },
+    "faqList": {
+      "type": "component",
+      "repeatable": true,
+      "component": "lender.faq-item"
+    }
+  }
+}

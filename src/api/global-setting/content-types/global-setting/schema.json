@@ -1,0 +1,81 @@
+{
+  "kind": "singleType",
+  "collectionName": "global_setting",
+  "info": {
+    "singularName": "global-setting",
+    "pluralName": "global-settings",
+    "displayName": "Global Settings",
+    "description": "Site-wide chrome from the WP ACF Options page (footer, social, contact, header)"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "footerLogo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "footerSslImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "mainDescription": {
+      "type": "text"
+    },
+    "quickLinksTitle": {
+      "type": "string"
+    },
+    "recentArticlesTitle": {
+      "type": "string"
+    },
+    "quickLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "global.quick-link"
+    },
+    "getInTouchTitle": {
+      "type": "string"
+    },
+    "getInTouchEmail": {
+      "type": "string"
+    },
+    "getInTouchPhone": {
+      "type": "string"
+    },
+    "getInTouchLocation": {
+      "type": "text"
+    },
+    "socialFacebook": {
+      "type": "string"
+    },
+    "socialInstagram": {
+      "type": "string"
+    },
+    "socialLinkedin": {
+      "type": "string"
+    },
+    "socialX": {
+      "type": "string"
+    },
+    "socialYoutube": {
+      "type": "string"
+    },
+    "textBelowHeader": {
+      "type": "string"
+    },
+    "titleAsSeenOn": {
+      "type": "string"
+    },
+    "logosAsSeenOn": {
+      "type": "component",
+      "repeatable": true,
+      "component": "global.logo-item"
+    }
+  }
+}

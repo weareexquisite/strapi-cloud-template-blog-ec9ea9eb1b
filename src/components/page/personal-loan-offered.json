@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_page_personal_loan_offereds",
+  "info": {
+    "displayName": "Personal Loan Offered",
+    "icon": "list"
+  },
+  "options": {},
+  "attributes": {
+    "offering": {
+      "type": "string"
+    }
+  }
+}

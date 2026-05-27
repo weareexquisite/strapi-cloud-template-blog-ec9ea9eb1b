@@ -1,0 +1,193 @@
+{
+  "kind": "collectionType",
+  "collectionName": "lenders",
+  "info": {
+    "singularName": "lender",
+    "pluralName": "lenders",
+    "displayName": "Lender",
+    "description": "Loan providers migrated from WordPress CPT \"lenders\""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "wp_id": {
+      "type": "integer",
+      "required": true,
+      "unique": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "website": {
+      "type": "string"
+    },
+    "applyButtonUrl": {
+      "type": "string"
+    },
+    "applyButtonTarget": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "phone2": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "hoAddress": {
+      "type": "text"
+    },
+    "amount": {
+      "type": "string"
+    },
+    "amountLowForFilters": {
+      "type": "integer"
+    },
+    "amountHighForFilters": {
+      "type": "integer"
+    },
+    "interestRate": {
+      "type": "string"
+    },
+    "terms": {
+      "type": "string"
+    },
+    "loanOfferedInfo": {
+      "type": "string"
+    },
+    "productType": {
+      "type": "json"
+    },
+    "creditScore": {
+      "type": "json"
+    },
+    "canadianStates": {
+      "type": "json"
+    },
+    "cities": {
+      "type": "json"
+    },
+    "lenderBadges": {
+      "type": "json"
+    },
+    "howLongInBusiness": {
+      "type": "string"
+    },
+    "howManyBranches": {
+      "type": "string"
+    },
+    "numberOfCustomers": {
+      "type": "string"
+    },
+    "totalFunded": {
+      "type": "string"
+    },
+    "availability": {
+      "type": "string"
+    },
+    "callCenterTiming": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    },
+    "facebook": {
+      "type": "string"
+    },
+    "twitter": {
+      "type": "string"
+    },
+    "instagram": {
+      "type": "string"
+    },
+    "linkedIn": {
+      "type": "string"
+    },
+    "youtube": {
+      "type": "string"
+    },
+    "smarterLoansReview": {
+      "type": "richtext"
+    },
+    "introVideo": {
+      "type": "text"
+    },
+    "trustedLender": {
+      "type": "boolean",
+      "default": false
+    },
+    "showInTabs": {
+      "type": "boolean",
+      "default": false
+    },
+    "showArticlesSection": {
+      "type": "boolean",
+      "default": false
+    },
+    "addFaqToThePage": {
+      "type": "boolean",
+      "default": false
+    },
+    "faqContent": {
+      "type": "component",
+      "repeatable": true,
+      "component": "lender.faq-item"
+    },
+    "loanOffered": {
+      "type": "component",
+      "repeatable": true,
+      "component": "lender.loan-offered"
+    },
+    "supportOffer": {
+      "type": "component",
+      "repeatable": true,
+      "component": "lender.support-offer"
+    },
+    "videos": {
+      "type": "component",
+      "repeatable": true,
+      "component": "lender.video"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    },
+    "alternatives": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::lender.lender"
+    },
+    "reviews": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::review.review",
+      "mappedBy": "lender"
+    },
+    "loanCategories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::category.category"
+    },
+    "primaryLoanCategory": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::category.category"
+    }
+  }
+}

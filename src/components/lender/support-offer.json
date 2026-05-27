@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_lender_support_offers",
+  "info": {
+    "displayName": "Support Offer",
+    "icon": "phone"
+  },
+  "options": {},
+  "attributes": {
+    "supportOffered": {
+      "type": "string"
+    }
+  }
+}

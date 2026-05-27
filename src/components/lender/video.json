@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_lender_videos",
+  "info": {
+    "displayName": "Video",
+    "icon": "play"
+  },
+  "options": {},
+  "attributes": {
+    "videoEmbed": {
+      "type": "text"
+    },
+    "videoDescription": {
+      "type": "text"
+    }
+  }
+}

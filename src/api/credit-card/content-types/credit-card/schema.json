@@ -1,0 +1,118 @@
+{
+  "kind": "collectionType",
+  "collectionName": "credit_cards",
+  "info": {
+    "singularName": "credit-card",
+    "pluralName": "credit-cards",
+    "displayName": "Credit Card",
+    "description": "Credit cards migrated from WP CPT \"credit-cards\""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "wp_id": {
+      "type": "integer",
+      "required": true,
+      "unique": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "cardName"
+    },
+    "cardName": {
+      "type": "string",
+      "required": true
+    },
+    "cardIssuer": {
+      "type": "string"
+    },
+    "cardImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "issuerLogo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "cardSummary": {
+      "type": "richtext"
+    },
+    "ourRating": {
+      "type": "decimal"
+    },
+    "ourVerdict": {
+      "type": "text"
+    },
+    "pros": {
+      "type": "richtext"
+    },
+    "cons": {
+      "type": "richtext"
+    },
+    "rewards": {
+      "type": "text"
+    },
+    "welcomeOffer": {
+      "type": "text"
+    },
+    "requirements": {
+      "type": "text"
+    },
+    "annualFee": {
+      "type": "string"
+    },
+    "purchaseApr": {
+      "type": "string"
+    },
+    "cashAdvanceApr": {
+      "type": "string"
+    },
+    "balanceTransferApr": {
+      "type": "string"
+    },
+    "currencyConversionFee": {
+      "type": "string"
+    },
+    "minimumCreditScore": {
+      "type": "string"
+    },
+    "minimumDepositToOpen": {
+      "type": "string"
+    },
+    "ctaUrl": {
+      "type": "string"
+    },
+    "creditCardCategories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::category.category"
+    },
+    "cardTypes": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::category.category"
+    },
+    "cardProviders": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::category.category"
+    },
+    "primaryCreditCardCategory": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::category.category"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}

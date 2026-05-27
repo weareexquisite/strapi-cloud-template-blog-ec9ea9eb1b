@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_lender_loan_offereds",
+  "info": {
+    "displayName": "Loan Offered",
+    "icon": "briefcase"
+  },
+  "options": {},
+  "attributes": {
+    "itemTitle": {
+      "type": "string"
+    },
+    "column1": {
+      "type": "richtext"
+    },
+    "column2": {
+      "type": "richtext"
+    },
+    "column3": {
+      "type": "richtext"
+    }
+  }
+}

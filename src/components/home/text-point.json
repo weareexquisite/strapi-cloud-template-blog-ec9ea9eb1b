@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_home_text_points",
+  "info": {
+    "displayName": "Text Point",
+    "icon": "check"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string"
+    }
+  }
+}

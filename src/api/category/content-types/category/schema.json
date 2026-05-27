@@ -5,24 +5,35 @@
     "singularName": "category",
     "pluralName": "categories",
     "displayName": "Category",
-    "description": "Organize your content into categories"
+    "description": "Flat taxonomy terms migrated from WP (loan/credit-card/card-type/card-provider/company/videos categories)"
   },
   "options": {
     "draftAndPublish": false
   },
-  "pluginOptions": {},
   "attributes": {
+    "wp_id": {
+      "type": "integer",
+      "required": true,
+      "unique": true
+    },
     "name": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "slug": {
-      "type": "uid"
+      "type": "string"
     },
-    "articles": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::article.article",
-      "mappedBy": "category"
+    "taxonomy": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "loan_category",
+        "credit_card_category",
+        "card_type",
+        "card_provider",
+        "company_category",
+        "videos_category"
+      ]
     },
     "description": {
       "type": "text"

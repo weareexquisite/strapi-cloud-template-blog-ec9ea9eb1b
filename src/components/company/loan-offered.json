@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_company_loan_offereds",
+  "info": {
+    "displayName": "Company Loan Offered",
+    "icon": "briefcase"
+  },
+  "options": {},
+  "attributes": {
+    "itemTitle": {
+      "type": "string"
+    },
+    "column1": {
+      "type": "richtext"
+    },
+    "column2": {
+      "type": "richtext"
+    },
+    "column3": {
+      "type": "richtext"
+    },
+    "customButtonLabel": {
+      "type": "string"
+    },
+    "customButtonLink": {
+      "type": "string"
+    },
+    "customLinkTarget": {
+      "type": "string"
+    }
+  }
+}

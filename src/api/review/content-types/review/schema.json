@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reviews",
+  "info": {
+    "singularName": "review",
+    "pluralName": "reviews",
+    "displayName": "Review",
+    "description": "Customer reviews migrated from WordPress CPT \"reviews\""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "wp_id": {
+      "type": "integer",
+      "required": true,
+      "unique": true
+    },
+    "reviewerName": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "rating": {
+      "type": "decimal"
+    },
+    "reviewTitle": {
+      "type": "string"
+    },
+    "review": {
+      "type": "text"
+    },
+    "displayOnHomepage": {
+      "type": "boolean",
+      "default": false
+    },
+    "lender": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::lender.lender",
+      "inversedBy": "reviews"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}

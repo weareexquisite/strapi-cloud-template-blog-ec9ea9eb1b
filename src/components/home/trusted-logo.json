@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_home_trusted_logos",
+  "info": {
+    "displayName": "Trusted Logo",
+    "icon": "picture"
+  },
+  "options": {},
+  "attributes": {
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "maxHeight": {
+      "type": "string"
+    }
+  }
+}

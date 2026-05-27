@@ -1,0 +1,110 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pages",
+  "info": {
+    "singularName": "page",
+    "pluralName": "pages",
+    "displayName": "Page",
+    "description": "Static pages migrated from WP \"page\" type (ACF-heavy; body via fallback chain)"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "wp_id": {
+      "type": "integer",
+      "required": true,
+      "unique": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "string"
+    },
+    "pageType": {
+      "type": "enumeration",
+      "enum": [
+        "city",
+        "loan"
+      ]
+    },
+    "pageDescription": {
+      "type": "text"
+    },
+    "body": {
+      "type": "richtext"
+    },
+    "loanTypeDetail": {
+      "type": "richtext"
+    },
+    "leftContent": {
+      "type": "richtext"
+    },
+    "rightContent": {
+      "type": "richtext"
+    },
+    "checkmark1": {
+      "type": "string"
+    },
+    "checkmark2": {
+      "type": "string"
+    },
+    "checkmark3": {
+      "type": "string"
+    },
+    "callToAction": {
+      "type": "string"
+    },
+    "ctaUrl": {
+      "type": "string"
+    },
+    "buttonTitle": {
+      "type": "string"
+    },
+    "buttonLink": {
+      "type": "string"
+    },
+    "showPageTitleAndBanner": {
+      "type": "boolean",
+      "default": true
+    },
+    "addFaqToThePage": {
+      "type": "boolean",
+      "default": false
+    },
+    "needsReview": {
+      "type": "boolean",
+      "default": false
+    },
+    "reviewNote": {
+      "type": "text"
+    },
+    "faqContent": {
+      "type": "component",
+      "repeatable": true,
+      "component": "lender.faq-item"
+    },
+    "personalLoanOffered": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.personal-loan-offered"
+    },
+    "relatedLenders": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::lender.lender"
+    },
+    "parent": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::page.page"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}
