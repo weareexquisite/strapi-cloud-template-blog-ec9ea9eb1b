@@ -46,25 +46,25 @@
       "type": "richtext"
     },
     "checkmark1": {
-      "type": "string"
+      "type": "text"
     },
     "checkmark2": {
-      "type": "string"
+      "type": "text"
     },
     "checkmark3": {
-      "type": "string"
+      "type": "text"
     },
     "callToAction": {
-      "type": "string"
+      "type": "text"
     },
     "ctaUrl": {
-      "type": "string"
+      "type": "text"
     },
     "buttonTitle": {
-      "type": "string"
+      "type": "text"
     },
     "buttonLink": {
-      "type": "string"
+      "type": "text"
     },
     "showPageTitleAndBanner": {
       "type": "boolean",
