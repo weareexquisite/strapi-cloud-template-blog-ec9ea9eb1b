@@ -33,6 +33,9 @@
     "pageDescription": {
       "type": "text"
     },
+    "featuredImageUrl": {
+      "type": "string"
+    },
     "body": {
       "type": "richtext"
     },
