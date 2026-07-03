@@ -37,6 +37,14 @@
     },
     "description": {
       "type": "text"
+    },
+    "contentAfterTable": {
+      "type": "richtext"
+    },
+    "faqContent": {
+      "type": "component",
+      "repeatable": true,
+      "component": "lender.faq-item"
     }
   }
 }
