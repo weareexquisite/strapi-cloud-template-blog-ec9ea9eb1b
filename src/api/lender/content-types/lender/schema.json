@@ -61,6 +61,10 @@
     "amountHighForFilters": {
       "type": "integer"
     },
+    "sortOrder": {
+      "type": "integer",
+      "default": 0
+    },
     "interestRate": {
       "type": "string"
     },
