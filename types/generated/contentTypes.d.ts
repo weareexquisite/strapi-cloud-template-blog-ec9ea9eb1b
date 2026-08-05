@@ -1092,6 +1092,7 @@ export interface ApiLenderProductLenderProduct
     apply_slug: Schema.Attribute.String;
     audience: Schema.Attribute.Enumeration<['business', 'personal']> &
       Schema.Attribute.Required;
+    completeness_missing: Schema.Attribute.JSON;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1100,6 +1101,7 @@ export interface ApiLenderProductLenderProduct
     funding_speed_hours: Schema.Attribute.Integer;
     good_to_know: Schema.Attribute.Text;
     income_types_accepted: Schema.Attribute.JSON;
+    is_complete: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     lender: Schema.Attribute.Relation<'manyToOne', 'api::lender.lender'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -1129,6 +1131,7 @@ export interface ApiLenderProductLenderProduct
         'mortgage',
         'auto_loan',
         'truck_loan',
+        'payday_loan',
         'other',
       ]
     > &

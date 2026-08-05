@@ -37,6 +37,7 @@
         "mortgage",
         "auto_loan",
         "truck_loan",
+        "payday_loan",
         "other"
       ],
       "required": true
@@ -139,6 +140,15 @@
       "type": "date",
       "required": true,
       "description": ">90 days old = flagged for re-verification (Section 5)"
+    },
+    "is_complete": {
+      "type": "boolean",
+      "default": false,
+      "description": "Computed by lifecycle hook - true when every match-critical field is present. Incomplete products keep their profile but are excluded from matching pools (Section 5)."
+    },
+    "completeness_missing": {
+      "type": "json",
+      "description": "Computed by lifecycle hook - names of missing match-critical fields (admin worksheet for data completion)"
     }
   }
 }
