@@ -52,15 +52,15 @@
     },
     "amount_min": {
       "type": "biginteger",
-      "required": true
+      "required": false
     },
     "amount_max": {
       "type": "biginteger",
-      "required": true
+      "required": false
     },
     "rate_min": {
       "type": "decimal",
-      "required": true
+      "required": false
     },
     "rate_max": {
       "type": "decimal"
@@ -72,7 +72,7 @@
         "factor",
         "monthly"
       ],
-      "required": true,
+      "required": false,
       "description": "MCAs display factor rates or cost per $10k, never APR (Section 16)"
     },
     "term_min_months": {
@@ -110,7 +110,7 @@
     },
     "provinces_served": {
       "type": "json",
-      "required": true,
+      "required": false,
       "description": "Array of province codes: AB, BC, MB, NB, NL, NS, NT, NU, ON, PE, QC, SK, YT"
     },
     "fees": {
@@ -138,7 +138,7 @@
     },
     "rates_last_reviewed": {
       "type": "date",
-      "required": true,
+      "required": false,
       "description": ">90 days old = flagged for re-verification (Section 5)"
     },
     "is_complete": {

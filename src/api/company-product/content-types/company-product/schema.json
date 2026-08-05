@@ -71,7 +71,7 @@
     },
     "rates_last_reviewed": {
       "type": "date",
-      "required": true
+      "required": false
     }
   }
 }
