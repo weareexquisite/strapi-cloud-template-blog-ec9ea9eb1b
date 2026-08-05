@@ -108,6 +108,12 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.seo"
+    },
+    "tldr_answer": {
+      "type": "text"
+    },
+    "action_log_refs": {
+      "type": "json"
     }
   }
 }

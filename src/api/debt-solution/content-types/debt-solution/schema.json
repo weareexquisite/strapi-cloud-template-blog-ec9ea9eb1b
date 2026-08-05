@@ -1,0 +1,91 @@
+{
+  "kind": "collectionType",
+  "collectionName": "debt_solutions",
+  "info": {
+    "singularName": "debt-solution",
+    "pluralName": "debt-solutions",
+    "displayName": "Debt Solution",
+    "description": "The four debt paths powering the Debt Solutions finder and education module (Section 18)"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "path_type": {
+      "type": "enumeration",
+      "enum": [
+        "debt_consolidation_loan",
+        "credit_counselling",
+        "consumer_proposal",
+        "bankruptcy"
+      ],
+      "required": true
+    },
+    "summary": {
+      "type": "text",
+      "required": true,
+      "description": "One-line honest description, e.g. 'A licensed insolvency trustee settles your debt for less than you owe'"
+    },
+    "cost_impact": {
+      "type": "string",
+      "required": true
+    },
+    "credit_impact": {
+      "type": "string",
+      "required": true
+    },
+    "debt_reduced": {
+      "type": "string",
+      "required": true
+    },
+    "best_when": {
+      "type": "string",
+      "required": true
+    },
+    "routes_to_funnel": {
+      "type": "boolean",
+      "default": false,
+      "description": "Only the consolidation path routes into our funnel (Section 18)"
+    },
+    "cta_label": {
+      "type": "string"
+    },
+    "cta_url": {
+      "type": "string"
+    },
+    "sort_order": {
+      "type": "integer",
+      "default": 0
+    },
+    "detail": {
+      "type": "richtext"
+    },
+    "tldr_answer": {
+      "type": "text",
+      "required": false
+    },
+    "faqContent": {
+      "type": "component",
+      "component": "lender.faq-item",
+      "repeatable": true
+    },
+    "seo": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "action_log_refs": {
+      "type": "json",
+      "description": "References into the action log (Section 24)"
+    }
+  }
+}

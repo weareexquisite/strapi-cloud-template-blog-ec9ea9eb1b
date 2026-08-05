@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_report_key_findings",
+  "info": {
+    "displayName": "Key finding"
+  },
+  "attributes": {
+    "finding": {
+      "type": "text",
+      "required": true
+    },
+    "stat": {
+      "type": "string",
+      "description": "The headline number, e.g. '+11%'"
+    }
+  }
+}

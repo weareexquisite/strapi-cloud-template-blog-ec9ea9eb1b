@@ -1,0 +1,101 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reports",
+  "info": {
+    "singularName": "report",
+    "pluralName": "reports",
+    "displayName": "Report",
+    "description": "Smarter Loans Research editions (Sections 9, 23)"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "permanent_slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true,
+      "description": "Permanent URL - editions are never unpublished (Section 9)"
+    },
+    "report_family": {
+      "type": "enumeration",
+      "enum": [
+        "lending_demand_index",
+        "loan_purpose",
+        "business_funding_by_industry",
+        "provincial_snapshots",
+        "requested_amounts_benchmark",
+        "credit_band_demand_mix",
+        "state_of_borrowing"
+      ],
+      "required": true
+    },
+    "cadence": {
+      "type": "enumeration",
+      "enum": [
+        "quarterly",
+        "annual"
+      ],
+      "required": true
+    },
+    "period": {
+      "type": "string",
+      "required": true,
+      "description": "e.g. 'Q2 2026'"
+    },
+    "data_period_start": {
+      "type": "date"
+    },
+    "data_period_end": {
+      "type": "date"
+    },
+    "headline_finding": {
+      "type": "text",
+      "required": true
+    },
+    "key_findings": {
+      "type": "component",
+      "component": "report.key-finding",
+      "repeatable": true
+    },
+    "charts": {
+      "type": "component",
+      "component": "report.chart",
+      "repeatable": true
+    },
+    "methodology": {
+      "type": "richtext",
+      "required": true,
+      "description": "Aggregates only; min segment 100; nothing lender-attributable (Appendix D)"
+    },
+    "pdf": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "tldr_answer": {
+      "type": "text",
+      "required": true
+    },
+    "faqContent": {
+      "type": "component",
+      "component": "lender.faq-item",
+      "repeatable": true
+    },
+    "seo": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "action_log_refs": {
+      "type": "json",
+      "description": "References into the action log (Section 24)"
+    }
+  }
+}

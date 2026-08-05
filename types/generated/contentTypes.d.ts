@@ -26,6 +26,11 @@ export interface AdminApiToken extends Struct.CollectionTypeSchema {
       Schema.Attribute.SetMinMaxLength<{
         minLength: 1;
       }>;
+    adminPermissions: Schema.Attribute.Relation<
+      'oneToMany',
+      'admin::permission'
+    >;
+    adminUserOwner: Schema.Attribute.Relation<'manyToOne', 'admin::user'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -39,6 +44,9 @@ export interface AdminApiToken extends Struct.CollectionTypeSchema {
         minLength: 1;
       }>;
     expiresAt: Schema.Attribute.DateTime;
+    kind: Schema.Attribute.Enumeration<['content-api', 'admin']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'content-api'>;
     lastUsedAt: Schema.Attribute.DateTime;
     lifespan: Schema.Attribute.BigInteger;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -56,7 +64,6 @@ export interface AdminApiToken extends Struct.CollectionTypeSchema {
     >;
     publishedAt: Schema.Attribute.DateTime;
     type: Schema.Attribute.Enumeration<['read-only', 'full-access', 'custom']> &
-      Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'read-only'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -134,6 +141,7 @@ export interface AdminPermission extends Struct.CollectionTypeSchema {
         minLength: 1;
       }>;
     actionParameters: Schema.Attribute.JSON & Schema.Attribute.DefaultTo<{}>;
+    apiToken: Schema.Attribute.Relation<'manyToOne', 'admin::api-token'>;
     conditions: Schema.Attribute.JSON & Schema.Attribute.DefaultTo<[]>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -241,6 +249,7 @@ export interface AdminSession extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'admin::session'> &
       Schema.Attribute.Private;
+    metadata: Schema.Attribute.JSON & Schema.Attribute.Private;
     origin: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Private;
@@ -385,6 +394,8 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
     };
   };
   attributes: {
+    apiTokens: Schema.Attribute.Relation<'oneToMany', 'admin::api-token'> &
+      Schema.Attribute.Private;
     blocked: Schema.Attribute.Boolean &
       Schema.Attribute.Private &
       Schema.Attribute.DefaultTo<false>;
@@ -421,12 +432,95 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     registrationToken: Schema.Attribute.String & Schema.Attribute.Private;
     resetPasswordToken: Schema.Attribute.String & Schema.Attribute.Private;
+    resetPasswordTokenExpiresAt: Schema.Attribute.DateTime &
+      Schema.Attribute.Private;
     roles: Schema.Attribute.Relation<'manyToMany', 'admin::role'> &
       Schema.Attribute.Private;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     username: Schema.Attribute.String;
+  };
+}
+
+export interface ApiAuthorAuthor extends Struct.CollectionTypeSchema {
+  collectionName: 'authors';
+  info: {
+    description: 'Article authors and contributors';
+    displayName: 'Author';
+    pluralName: 'authors';
+    singularName: 'author';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    avatar: Schema.Attribute.Media<'images'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email;
+    facebook: Schema.Attribute.String;
+    firstName: Schema.Attribute.String;
+    lastName: Schema.Attribute.String;
+    linkedin: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::author.author'
+    > &
+      Schema.Attribute.Private;
+    longBio: Schema.Attribute.RichText;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    role: Schema.Attribute.String;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    shortBio: Schema.Attribute.Text;
+    slug: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 200;
+      }>;
+    twitter: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    website: Schema.Attribute.String;
+    wp_id: Schema.Attribute.Integer & Schema.Attribute.Unique;
+  };
+}
+
+export interface ApiBadgeBadge extends Struct.CollectionTypeSchema {
+  collectionName: 'badges';
+  info: {
+    description: 'Earned Badges programme (Section 17): Quality Lender, Customer Favourite, Enduring Excellence, Video Verified';
+    displayName: 'Badge';
+    pluralName: 'badges';
+    singularName: 'badge';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    criteria_text: Schema.Attribute.RichText & Schema.Attribute.Required;
+    lenders: Schema.Attribute.Relation<'manyToMany', 'api::lender.lender'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::badge.badge'> &
+      Schema.Attribute.Private;
+    medal: Schema.Attribute.Media<'images'>;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    review_date: Schema.Attribute.Date & Schema.Attribute.Required;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    withdrawn: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    years_earned: Schema.Attribute.Component<'badge.year-earned', true>;
   };
 }
 
@@ -442,10 +536,13 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
+    action_log_refs: Schema.Attribute.JSON;
+    contentAfterTable: Schema.Attribute.RichText;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Text;
+    faqContent: Schema.Attribute.Component<'lender.faq-item', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -466,12 +563,72 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
       ]
     > &
       Schema.Attribute.Required;
+    tldr_answer: Schema.Attribute.Text;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     wp_id: Schema.Attribute.Integer &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
+  };
+}
+
+export interface ApiCompanyProductCompanyProduct
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'company_products';
+  info: {
+    description: 'Company/banking product record mirroring the lender structure (Appendix B)';
+    displayName: 'Company Product';
+    pluralName: 'company-products';
+    singularName: 'company-product';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    amount_max: Schema.Attribute.BigInteger;
+    amount_min: Schema.Attribute.BigInteger;
+    company: Schema.Attribute.Relation<'manyToOne', 'api::company.company'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    fees: Schema.Attribute.RichText;
+    good_to_know: Schema.Attribute.Text;
+    insurance_type: Schema.Attribute.String;
+    interest_rate: Schema.Attribute.Decimal;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::company-product.company-product'
+    > &
+      Schema.Attribute.Private;
+    monthly_fee: Schema.Attribute.Decimal;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    product_type: Schema.Attribute.Enumeration<
+      [
+        'savings_account',
+        'chequing_account',
+        'hybrid_account',
+        'gic',
+        'prepaid_card',
+        'debt_management_plan',
+        'debt_restructuring',
+        'consumer_proposal_admin',
+        'insurance',
+        'other',
+      ]
+    > &
+      Schema.Attribute.Required;
+    province_overrides: Schema.Attribute.Component<
+      'product.province-override',
+      true
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    rates_last_reviewed: Schema.Attribute.Date & Schema.Attribute.Required;
+    referral_url: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -487,22 +644,39 @@ export interface ApiCompanyCompany extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    action_log_refs: Schema.Attribute.JSON;
     addFaqToThePage: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<false>;
     amount: Schema.Attribute.String;
     availability: Schema.Attribute.String;
+    best_for: Schema.Attribute.Text;
     buttonLink: Schema.Attribute.String;
     buttonText: Schema.Attribute.String;
     callCenterTiming: Schema.Attribute.String;
     canadianStates: Schema.Attribute.JSON;
     cities: Schema.Attribute.JSON;
+    company_type: Schema.Attribute.Enumeration<
+      [
+        'bank',
+        'credit_union',
+        'debt_relief',
+        'credit_counselling',
+        'insolvency_trustee',
+        'fintech',
+        'other',
+      ]
+    >;
     companyCategories: Schema.Attribute.Relation<
       'manyToMany',
       'api::category.category'
     >;
+    cons: Schema.Attribute.JSON;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    customField1: Schema.Attribute.Text;
+    customField2: Schema.Attribute.Text;
+    customField3: Schema.Attribute.Text;
     email: Schema.Attribute.Email;
     facebook: Schema.Attribute.String;
     faqContent: Schema.Attribute.Component<'lender.faq-item', true>;
@@ -523,6 +697,7 @@ export interface ApiCompanyCompany extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     logo: Schema.Attribute.Media<'images'>;
     name: Schema.Attribute.String & Schema.Attribute.Required;
+    not_for: Schema.Attribute.Text;
     numberOfCustomers: Schema.Attribute.String;
     phone: Schema.Attribute.String;
     phone2: Schema.Attribute.String;
@@ -532,10 +707,20 @@ export interface ApiCompanyCompany extends Struct.CollectionTypeSchema {
       'oneToOne',
       'api::category.category'
     >;
+    products: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::company-product.company-product'
+    >;
+    pros: Schema.Attribute.JSON;
     publishedAt: Schema.Attribute.DateTime;
+    rates_last_reviewed: Schema.Attribute.Date;
+    referral_url: Schema.Attribute.String;
+    review_date: Schema.Attribute.Date;
+    reviewed_by: Schema.Attribute.Relation<'manyToOne', 'api::author.author'>;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'name'>;
     supportOffer: Schema.Attribute.Component<'lender.support-offer', true>;
+    tldr_answer: Schema.Attribute.Text;
     totalFunded: Schema.Attribute.String;
     twitter: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -562,8 +747,24 @@ export interface ApiCreditCardCreditCard extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    action_log_refs: Schema.Attribute.JSON;
+    annual_fee_amount: Schema.Attribute.Decimal;
     annualFee: Schema.Attribute.String;
     balanceTransferApr: Schema.Attribute.String;
+    card_type: Schema.Attribute.Enumeration<
+      [
+        'cash_back',
+        'travel',
+        'low_interest',
+        'secured',
+        'credit_builder',
+        'no_fee',
+        'rewards',
+        'student',
+        'business',
+        'other',
+      ]
+    >;
     cardImage: Schema.Attribute.Media<'images'>;
     cardIssuer: Schema.Attribute.String;
     cardName: Schema.Attribute.String & Schema.Attribute.Required;
@@ -576,11 +777,17 @@ export interface ApiCreditCardCreditCard extends Struct.CollectionTypeSchema {
       'manyToMany',
       'api::category.category'
     >;
+    cash_advance_apr_value: Schema.Attribute.Decimal;
     cashAdvanceApr: Schema.Attribute.String;
+    checked_date: Schema.Attribute.Date;
+    compliance_copy: Schema.Attribute.Text;
     cons: Schema.Attribute.RichText;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    credit_needed: Schema.Attribute.Enumeration<
+      ['any', 'poor', 'fair', 'good', 'excellent']
+    >;
     creditCardCategories: Schema.Attribute.Relation<
       'manyToMany',
       'api::category.category'
@@ -594,6 +801,7 @@ export interface ApiCreditCardCreditCard extends Struct.CollectionTypeSchema {
       'api::credit-card.credit-card'
     > &
       Schema.Attribute.Private;
+    min_deposit: Schema.Attribute.Decimal;
     minimumCreditScore: Schema.Attribute.String;
     minimumDepositToOpen: Schema.Attribute.String;
     ourRating: Schema.Attribute.Decimal;
@@ -603,12 +811,19 @@ export interface ApiCreditCardCreditCard extends Struct.CollectionTypeSchema {
       'api::category.category'
     >;
     pros: Schema.Attribute.RichText;
+    province_overrides: Schema.Attribute.Component<
+      'product.province-override',
+      true
+    >;
     publishedAt: Schema.Attribute.DateTime;
+    purchase_apr_value: Schema.Attribute.Decimal;
     purchaseApr: Schema.Attribute.String;
+    referral_url: Schema.Attribute.String;
     requirements: Schema.Attribute.Text;
     rewards: Schema.Attribute.Text;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'cardName'>;
+    tldr_answer: Schema.Attribute.Text;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -616,6 +831,61 @@ export interface ApiCreditCardCreditCard extends Struct.CollectionTypeSchema {
     wp_id: Schema.Attribute.Integer &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
+  };
+}
+
+export interface ApiDebtSolutionDebtSolution
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'debt_solutions';
+  info: {
+    description: 'The four debt paths powering the Debt Solutions finder and education module (Section 18)';
+    displayName: 'Debt Solution';
+    pluralName: 'debt-solutions';
+    singularName: 'debt-solution';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    action_log_refs: Schema.Attribute.JSON;
+    best_when: Schema.Attribute.String & Schema.Attribute.Required;
+    cost_impact: Schema.Attribute.String & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    credit_impact: Schema.Attribute.String & Schema.Attribute.Required;
+    cta_label: Schema.Attribute.String;
+    cta_url: Schema.Attribute.String;
+    debt_reduced: Schema.Attribute.String & Schema.Attribute.Required;
+    detail: Schema.Attribute.RichText;
+    faqContent: Schema.Attribute.Component<'lender.faq-item', true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::debt-solution.debt-solution'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    path_type: Schema.Attribute.Enumeration<
+      [
+        'debt_consolidation_loan',
+        'credit_counselling',
+        'consumer_proposal',
+        'bankruptcy',
+      ]
+    > &
+      Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    routes_to_funnel: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    sort_order: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    summary: Schema.Attribute.Text & Schema.Attribute.Required;
+    tldr_answer: Schema.Attribute.Text;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -702,6 +972,59 @@ export interface ApiGlobalSettingGlobalSetting extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiGovernmentProgramGovernmentProgram
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'government_programs';
+  info: {
+    description: 'Structured program records feeding the hub, matcher, category blocks and city pages (Section 10)';
+    displayName: 'Government Program';
+    pluralName: 'government-programs';
+    singularName: 'government-program';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    action_log_refs: Schema.Attribute.JSON;
+    applied_through: Schema.Attribute.String & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    eligible_stages: Schema.Attribute.JSON & Schema.Attribute.Required;
+    faqContent: Schema.Attribute.Component<'lender.faq-item', true>;
+    how_to_apply: Schema.Attribute.RichText;
+    intake_status: Schema.Attribute.Enumeration<
+      ['open', 'closed', 'periodic']
+    > &
+      Schema.Attribute.DefaultTo<'open'>;
+    level: Schema.Attribute.Enumeration<['federal', 'provincial']> &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::government-program.government-program'
+    > &
+      Schema.Attribute.Private;
+    maximum_amount: Schema.Attribute.BigInteger;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    official_url: Schema.Attribute.String & Schema.Attribute.Required;
+    permitted_uses: Schema.Attribute.JSON & Schema.Attribute.Required;
+    provinces: Schema.Attribute.JSON;
+    publishedAt: Schema.Attribute.DateTime;
+    requires_incorporation: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    revenue_ceiling: Schema.Attribute.BigInteger;
+    ruled_out_copy: Schema.Attribute.Text;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    tldr_answer: Schema.Attribute.Text & Schema.Attribute.Required;
+    typical_timeline: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
   collectionName: 'homepage';
   info: {
@@ -751,6 +1074,84 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiLenderProductLenderProduct
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'lender_products';
+  info: {
+    description: 'Per-product structured record - the lender data standard (Section 5)';
+    displayName: 'Lender Product';
+    pluralName: 'lender-products';
+    singularName: 'lender-product';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    amount_max: Schema.Attribute.BigInteger & Schema.Attribute.Required;
+    amount_min: Schema.Attribute.BigInteger & Schema.Attribute.Required;
+    apply_slug: Schema.Attribute.String;
+    audience: Schema.Attribute.Enumeration<['business', 'personal']> &
+      Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    docs_required: Schema.Attribute.JSON;
+    fees: Schema.Attribute.RichText;
+    funding_speed_hours: Schema.Attribute.Integer;
+    good_to_know: Schema.Attribute.Text;
+    income_types_accepted: Schema.Attribute.JSON;
+    lender: Schema.Attribute.Relation<'manyToOne', 'api::lender.lender'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::lender-product.lender-product'
+    > &
+      Schema.Attribute.Private;
+    min_credit_band: Schema.Attribute.Enumeration<
+      ['any', 'poor', 'fair', 'good', 'excellent']
+    >;
+    min_income_monthly: Schema.Attribute.Integer;
+    min_monthly_revenue: Schema.Attribute.Integer;
+    min_time_in_business_months: Schema.Attribute.Integer;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    prepayment: Schema.Attribute.Text;
+    product_type: Schema.Attribute.Enumeration<
+      [
+        'term_loan',
+        'line_of_credit',
+        'merchant_cash_advance',
+        'equipment_financing',
+        'invoice_factoring',
+        'instalment_loan',
+        'personal_line_of_credit',
+        'secured_personal_loan',
+        'home_equity_loan',
+        'mortgage',
+        'auto_loan',
+        'truck_loan',
+        'other',
+      ]
+    > &
+      Schema.Attribute.Required;
+    province_overrides: Schema.Attribute.Component<
+      'product.province-override',
+      true
+    >;
+    provinces_served: Schema.Attribute.JSON & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    rate_max: Schema.Attribute.Decimal;
+    rate_min: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    rate_type: Schema.Attribute.Enumeration<['apr', 'factor', 'monthly']> &
+      Schema.Attribute.Required;
+    rates_last_reviewed: Schema.Attribute.Date & Schema.Attribute.Required;
+    term_max_months: Schema.Attribute.Integer;
+    term_min_months: Schema.Attribute.Integer;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiLenderLender extends Struct.CollectionTypeSchema {
   collectionName: 'lenders';
   info: {
@@ -763,6 +1164,7 @@ export interface ApiLenderLender extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    action_log_refs: Schema.Attribute.JSON;
     addFaqToThePage: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<false>;
     alternatives: Schema.Attribute.Relation<'oneToMany', 'api::lender.lender'>;
@@ -772,16 +1174,23 @@ export interface ApiLenderLender extends Struct.CollectionTypeSchema {
     applyButtonTarget: Schema.Attribute.String;
     applyButtonUrl: Schema.Attribute.String;
     availability: Schema.Attribute.String;
+    badge_years: Schema.Attribute.JSON;
+    best_for: Schema.Attribute.Text;
     callCenterTiming: Schema.Attribute.String;
     canadianStates: Schema.Attribute.JSON;
     cities: Schema.Attribute.JSON;
+    cons: Schema.Attribute.JSON;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     creditScore: Schema.Attribute.JSON;
+    customers_served: Schema.Attribute.String;
+    description: Schema.Attribute.Text;
+    earned_badges: Schema.Attribute.Relation<'manyToMany', 'api::badge.badge'>;
     email: Schema.Attribute.Email;
     facebook: Schema.Attribute.String;
     faqContent: Schema.Attribute.Component<'lender.faq-item', true>;
+    founded_year: Schema.Attribute.Integer;
     hoAddress: Schema.Attribute.Text;
     howLongInBusiness: Schema.Attribute.String;
     howManyBranches: Schema.Attribute.String;
@@ -804,6 +1213,7 @@ export interface ApiLenderLender extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     logo: Schema.Attribute.Media<'images'>;
     name: Schema.Attribute.String & Schema.Attribute.Required;
+    not_for: Schema.Attribute.Text;
     numberOfCustomers: Schema.Attribute.String;
     phone: Schema.Attribute.String;
     phone2: Schema.Attribute.String;
@@ -811,8 +1221,16 @@ export interface ApiLenderLender extends Struct.CollectionTypeSchema {
       'oneToOne',
       'api::category.category'
     >;
+    products: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::lender-product.lender-product'
+    >;
     productType: Schema.Attribute.JSON;
+    pros: Schema.Attribute.JSON;
     publishedAt: Schema.Attribute.DateTime;
+    rates_last_reviewed: Schema.Attribute.Date;
+    review_date: Schema.Attribute.Date;
+    reviewed_by: Schema.Attribute.Relation<'manyToOne', 'api::author.author'>;
     reviews: Schema.Attribute.Relation<'oneToMany', 'api::review.review'>;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     showArticlesSection: Schema.Attribute.Boolean &
@@ -820,15 +1238,20 @@ export interface ApiLenderLender extends Struct.CollectionTypeSchema {
     showInTabs: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     slug: Schema.Attribute.UID<'name'>;
     smarterLoansReview: Schema.Attribute.RichText;
+    sortOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     state: Schema.Attribute.String;
     supportOffer: Schema.Attribute.Component<'lender.support-offer', true>;
     terms: Schema.Attribute.String;
+    tldr_answer: Schema.Attribute.Text;
     totalFunded: Schema.Attribute.String;
     trustedLender: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     twitter: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    verified_by_lender: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    verified_date: Schema.Attribute.Date;
     videos: Schema.Attribute.Component<'lender.video', true>;
     website: Schema.Attribute.String;
     wp_id: Schema.Attribute.Integer &
@@ -850,20 +1273,22 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    action_log_refs: Schema.Attribute.JSON;
     addFaqToThePage: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<false>;
     body: Schema.Attribute.RichText;
-    buttonLink: Schema.Attribute.String;
-    buttonTitle: Schema.Attribute.String;
-    callToAction: Schema.Attribute.String;
-    checkmark1: Schema.Attribute.String;
-    checkmark2: Schema.Attribute.String;
-    checkmark3: Schema.Attribute.String;
+    buttonLink: Schema.Attribute.Text;
+    buttonTitle: Schema.Attribute.Text;
+    callToAction: Schema.Attribute.Text;
+    checkmark1: Schema.Attribute.Text;
+    checkmark2: Schema.Attribute.Text;
+    checkmark3: Schema.Attribute.Text;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    ctaUrl: Schema.Attribute.String;
+    ctaUrl: Schema.Attribute.Text;
     faqContent: Schema.Attribute.Component<'lender.faq-item', true>;
+    featuredImageUrl: Schema.Attribute.String;
     leftContent: Schema.Attribute.RichText;
     loanTypeDetail: Schema.Attribute.RichText;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -889,6 +1314,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
       Schema.Attribute.DefaultTo<true>;
     slug: Schema.Attribute.String;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+    tldr_answer: Schema.Attribute.Text;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -910,6 +1336,7 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    action_log_refs: Schema.Attribute.JSON;
     body: Schema.Attribute.RichText;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -926,12 +1353,69 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
     seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.String;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+    tldr_answer: Schema.Attribute.Text;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     wp_id: Schema.Attribute.Integer &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
+  };
+}
+
+export interface ApiReportReport extends Struct.CollectionTypeSchema {
+  collectionName: 'reports';
+  info: {
+    description: 'Smarter Loans Research editions (Sections 9, 23)';
+    displayName: 'Report';
+    pluralName: 'reports';
+    singularName: 'report';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    action_log_refs: Schema.Attribute.JSON;
+    cadence: Schema.Attribute.Enumeration<['quarterly', 'annual']> &
+      Schema.Attribute.Required;
+    charts: Schema.Attribute.Component<'report.chart', true>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    data_period_end: Schema.Attribute.Date;
+    data_period_start: Schema.Attribute.Date;
+    faqContent: Schema.Attribute.Component<'lender.faq-item', true>;
+    headline_finding: Schema.Attribute.Text & Schema.Attribute.Required;
+    key_findings: Schema.Attribute.Component<'report.key-finding', true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::report.report'
+    > &
+      Schema.Attribute.Private;
+    methodology: Schema.Attribute.RichText & Schema.Attribute.Required;
+    pdf: Schema.Attribute.Media<'files'>;
+    period: Schema.Attribute.String & Schema.Attribute.Required;
+    permanent_slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    report_family: Schema.Attribute.Enumeration<
+      [
+        'lending_demand_index',
+        'loan_purpose',
+        'business_funding_by_industry',
+        'provincial_snapshots',
+        'requested_amounts_benchmark',
+        'credit_band_demand_mix',
+        'state_of_borrowing',
+      ]
+    > &
+      Schema.Attribute.Required;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    tldr_answer: Schema.Attribute.Text & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -1028,6 +1512,7 @@ export interface ApiVideoEntryVideoEntry extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    duration_seconds: Schema.Attribute.Integer;
     isFeatured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -1040,10 +1525,20 @@ export interface ApiVideoEntryVideoEntry extends Struct.CollectionTypeSchema {
       'api::category.category'
     >;
     publishedAt: Schema.Attribute.DateTime;
+    related_company: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::company.company'
+    >;
+    related_lender: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::lender.lender'
+    >;
+    related_post: Schema.Attribute.Relation<'manyToOne', 'api::post.post'>;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'title'>;
     thumbnail: Schema.Attribute.Media<'images'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+    transcript: Schema.Attribute.RichText;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1321,6 +1816,7 @@ export interface PluginUploadFile extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     ext: Schema.Attribute.String;
+    focalPoint: Schema.Attribute.JSON;
     folder: Schema.Attribute.Relation<'manyToOne', 'plugin::upload.folder'> &
       Schema.Attribute.Private;
     folderPath: Schema.Attribute.String &
@@ -1558,7 +2054,7 @@ export interface PluginUsersPermissionsUser
 }
 
 declare module '@strapi/strapi' {
-  export module Public {
+  export namespace Public {
     export interface ContentTypeSchemas {
       'admin::api-token': AdminApiToken;
       'admin::api-token-permission': AdminApiTokenPermission;
@@ -1568,15 +2064,22 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::author.author': ApiAuthorAuthor;
+      'api::badge.badge': ApiBadgeBadge;
       'api::category.category': ApiCategoryCategory;
+      'api::company-product.company-product': ApiCompanyProductCompanyProduct;
       'api::company.company': ApiCompanyCompany;
       'api::credit-card.credit-card': ApiCreditCardCreditCard;
+      'api::debt-solution.debt-solution': ApiDebtSolutionDebtSolution;
       'api::expert.expert': ApiExpertExpert;
       'api::global-setting.global-setting': ApiGlobalSettingGlobalSetting;
+      'api::government-program.government-program': ApiGovernmentProgramGovernmentProgram;
       'api::homepage.homepage': ApiHomepageHomepage;
+      'api::lender-product.lender-product': ApiLenderProductLenderProduct;
       'api::lender.lender': ApiLenderLender;
       'api::page.page': ApiPagePage;
       'api::post.post': ApiPostPost;
+      'api::report.report': ApiReportReport;
       'api::review.review': ApiReviewReview;
       'api::testimonial.testimonial': ApiTestimonialTestimonial;
       'api::video-entry.video-entry': ApiVideoEntryVideoEntry;

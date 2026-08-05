@@ -1,0 +1,105 @@
+{
+  "kind": "collectionType",
+  "collectionName": "government_programs",
+  "info": {
+    "singularName": "government-program",
+    "pluralName": "government-programs",
+    "displayName": "Government Program",
+    "description": "Structured program records feeding the hub, matcher, category blocks and city pages (Section 10)"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "level": {
+      "type": "enumeration",
+      "enum": [
+        "federal",
+        "provincial"
+      ],
+      "required": true
+    },
+    "maximum_amount": {
+      "type": "biginteger"
+    },
+    "permitted_uses": {
+      "type": "json",
+      "required": true,
+      "description": "Array from: equipment, leaseholds, working_capital, hiring, property, other"
+    },
+    "applied_through": {
+      "type": "string",
+      "required": true,
+      "description": "e.g. 'Your bank', 'BDC directly', 'Province of Ontario'"
+    },
+    "official_url": {
+      "type": "string",
+      "required": true,
+      "description": "Cards link to the official government route - no commercial links (Section 10)"
+    },
+    "typical_timeline": {
+      "type": "string",
+      "description": "e.g. '4 - 6 weeks'"
+    },
+    "intake_status": {
+      "type": "enumeration",
+      "enum": [
+        "open",
+        "closed",
+        "periodic"
+      ],
+      "default": "open"
+    },
+    "eligible_stages": {
+      "type": "json",
+      "required": true,
+      "description": "Array from: pre_revenue, under_1_year, operating_1_3_years, 3_plus_years"
+    },
+    "revenue_ceiling": {
+      "type": "biginteger",
+      "description": "Max annual revenue to qualify; null = no ceiling"
+    },
+    "requires_incorporation": {
+      "type": "boolean",
+      "default": false
+    },
+    "provinces": {
+      "type": "json",
+      "description": "Province codes; null/empty = all of Canada"
+    },
+    "how_to_apply": {
+      "type": "richtext"
+    },
+    "ruled_out_copy": {
+      "type": "text",
+      "description": "Plain-language reason template when the matcher rules this program out"
+    },
+    "tldr_answer": {
+      "type": "text",
+      "required": true
+    },
+    "faqContent": {
+      "type": "component",
+      "component": "lender.faq-item",
+      "repeatable": true
+    },
+    "seo": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "action_log_refs": {
+      "type": "json",
+      "description": "References into the action log (Section 24)"
+    }
+  }
+}

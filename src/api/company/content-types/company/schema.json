@@ -156,6 +156,56 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.seo"
+    },
+    "products": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::company-product.company-product",
+      "mappedBy": "company"
+    },
+    "company_type": {
+      "type": "enumeration",
+      "enum": [
+        "bank",
+        "credit_union",
+        "debt_relief",
+        "credit_counselling",
+        "insolvency_trustee",
+        "fintech",
+        "other"
+      ]
+    },
+    "referral_url": {
+      "type": "string"
+    },
+    "best_for": {
+      "type": "text"
+    },
+    "not_for": {
+      "type": "text"
+    },
+    "pros": {
+      "type": "json"
+    },
+    "cons": {
+      "type": "json"
+    },
+    "reviewed_by": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::author.author"
+    },
+    "review_date": {
+      "type": "date"
+    },
+    "rates_last_reviewed": {
+      "type": "date"
+    },
+    "tldr_answer": {
+      "type": "text"
+    },
+    "action_log_refs": {
+      "type": "json"
     }
   }
 }

@@ -1,0 +1,50 @@
+{
+  "collectionName": "components_product_province_overrides",
+  "info": {
+    "displayName": "Province override",
+    "description": "Per-province variation (Quebec cost-of-borrowing etc., Appendix D)"
+  },
+  "attributes": {
+    "province": {
+      "type": "enumeration",
+      "enum": [
+        "AB",
+        "BC",
+        "MB",
+        "NB",
+        "NL",
+        "NS",
+        "NT",
+        "NU",
+        "ON",
+        "PE",
+        "QC",
+        "SK",
+        "YT"
+      ],
+      "required": true
+    },
+    "amount_min": {
+      "type": "biginteger"
+    },
+    "amount_max": {
+      "type": "biginteger"
+    },
+    "rate_min": {
+      "type": "decimal"
+    },
+    "rate_max": {
+      "type": "decimal"
+    },
+    "term_min_months": {
+      "type": "integer"
+    },
+    "term_max_months": {
+      "type": "integer"
+    },
+    "display_copy": {
+      "type": "text",
+      "description": "Compliance display copy for this province"
+    }
+  }
+}
