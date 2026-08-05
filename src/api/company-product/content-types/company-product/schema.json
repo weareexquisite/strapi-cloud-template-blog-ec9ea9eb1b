@@ -1,0 +1,77 @@
+{
+  "kind": "collectionType",
+  "collectionName": "company_products",
+  "info": {
+    "singularName": "company-product",
+    "pluralName": "company-products",
+    "displayName": "Company Product",
+    "description": "Company/banking product record mirroring the lender structure (Appendix B)"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "company": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::company.company",
+      "inversedBy": "products"
+    },
+    "product_type": {
+      "type": "enumeration",
+      "enum": [
+        "savings_account",
+        "chequing_account",
+        "hybrid_account",
+        "gic",
+        "prepaid_card",
+        "debt_management_plan",
+        "debt_restructuring",
+        "consumer_proposal_admin",
+        "insurance",
+        "other"
+      ],
+      "required": true
+    },
+    "interest_rate": {
+      "type": "decimal",
+      "description": "e.g. everyday savings rate"
+    },
+    "monthly_fee": {
+      "type": "decimal"
+    },
+    "insurance_type": {
+      "type": "string",
+      "description": "e.g. CDIC"
+    },
+    "amount_min": {
+      "type": "biginteger"
+    },
+    "amount_max": {
+      "type": "biginteger"
+    },
+    "fees": {
+      "type": "richtext"
+    },
+    "good_to_know": {
+      "type": "text"
+    },
+    "province_overrides": {
+      "type": "component",
+      "component": "product.province-override",
+      "repeatable": true
+    },
+    "referral_url": {
+      "type": "string",
+      "description": "Outbound referral link with disclosure (Section 18 exception)"
+    },
+    "rates_last_reviewed": {
+      "type": "date",
+      "required": true
+    }
+  }
+}

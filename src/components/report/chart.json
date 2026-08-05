@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_report_charts",
+  "info": {
+    "displayName": "Chart",
+    "description": "Every chart ships with its data as an HTML table (Section 9)"
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "data_table": {
+      "type": "richtext",
+      "required": true,
+      "description": "Server-rendered HTML table of the chart's data - citation requirement"
+    },
+    "source_note": {
+      "type": "string"
+    }
+  }
+}

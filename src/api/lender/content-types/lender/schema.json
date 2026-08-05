@@ -24,9 +24,9 @@
       "type": "string",
       "required": true
     },
-      "description": {
-        "type": "text"
-      },
+    "description": {
+      "type": "text"
+    },
     "logo": {
       "type": "media",
       "multiple": false,
@@ -195,6 +195,63 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::category.category"
+    },
+    "products": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::lender-product.lender-product",
+      "mappedBy": "lender"
+    },
+    "earned_badges": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::badge.badge",
+      "mappedBy": "lenders"
+    },
+    "badge_years": {
+      "type": "json"
+    },
+    "verified_by_lender": {
+      "type": "boolean",
+      "default": false
+    },
+    "verified_date": {
+      "type": "date"
+    },
+    "founded_year": {
+      "type": "integer"
+    },
+    "customers_served": {
+      "type": "string"
+    },
+    "best_for": {
+      "type": "text"
+    },
+    "not_for": {
+      "type": "text"
+    },
+    "pros": {
+      "type": "json"
+    },
+    "cons": {
+      "type": "json"
+    },
+    "reviewed_by": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::author.author"
+    },
+    "review_date": {
+      "type": "date"
+    },
+    "rates_last_reviewed": {
+      "type": "date"
+    },
+    "tldr_answer": {
+      "type": "text"
+    },
+    "action_log_refs": {
+      "type": "json"
     }
   }
 }

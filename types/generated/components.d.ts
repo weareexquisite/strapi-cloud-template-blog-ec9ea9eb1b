@@ -1,5 +1,23 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface BadgeYearEarned extends Struct.ComponentSchema {
+  collectionName: 'components_badge_years_earned';
+  info: {
+    displayName: 'Year earned';
+  };
+  attributes: {
+    year: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 2100;
+          min: 2010;
+        },
+        number
+      >;
+  };
+}
+
 export interface CompanyLoanOffered extends Struct.ComponentSchema {
   collectionName: 'components_company_loan_offereds';
   info: {
@@ -150,6 +168,66 @@ export interface PagePersonalLoanOffered extends Struct.ComponentSchema {
   };
 }
 
+export interface ProductProvinceOverride extends Struct.ComponentSchema {
+  collectionName: 'components_product_province_overrides';
+  info: {
+    description: 'Per-province variation (Quebec cost-of-borrowing etc., Appendix D)';
+    displayName: 'Province override';
+  };
+  attributes: {
+    amount_max: Schema.Attribute.BigInteger;
+    amount_min: Schema.Attribute.BigInteger;
+    display_copy: Schema.Attribute.Text;
+    province: Schema.Attribute.Enumeration<
+      [
+        'AB',
+        'BC',
+        'MB',
+        'NB',
+        'NL',
+        'NS',
+        'NT',
+        'NU',
+        'ON',
+        'PE',
+        'QC',
+        'SK',
+        'YT',
+      ]
+    > &
+      Schema.Attribute.Required;
+    rate_max: Schema.Attribute.Decimal;
+    rate_min: Schema.Attribute.Decimal;
+    term_max_months: Schema.Attribute.Integer;
+    term_min_months: Schema.Attribute.Integer;
+  };
+}
+
+export interface ReportChart extends Struct.ComponentSchema {
+  collectionName: 'components_report_charts';
+  info: {
+    description: 'Every chart ships with its data as an HTML table (Section 9)';
+    displayName: 'Chart';
+  };
+  attributes: {
+    data_table: Schema.Attribute.RichText & Schema.Attribute.Required;
+    image: Schema.Attribute.Media<'images'>;
+    source_note: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ReportKeyFinding extends Struct.ComponentSchema {
+  collectionName: 'components_report_key_findings';
+  info: {
+    displayName: 'Key finding';
+  };
+  attributes: {
+    finding: Schema.Attribute.Text & Schema.Attribute.Required;
+    stat: Schema.Attribute.String;
+  };
+}
+
 export interface SharedSeo extends Struct.ComponentSchema {
   collectionName: 'components_shared_seos';
   info: {
@@ -165,8 +243,9 @@ export interface SharedSeo extends Struct.ComponentSchema {
 }
 
 declare module '@strapi/strapi' {
-  export module Public {
+  export namespace Public {
     export interface ComponentSchemas {
+      'badge.year-earned': BadgeYearEarned;
       'company.loan-offered': CompanyLoanOffered;
       'global.logo-item': GlobalLogoItem;
       'global.quick-link': GlobalQuickLink;
@@ -179,6 +258,9 @@ declare module '@strapi/strapi' {
       'lender.support-offer': LenderSupportOffer;
       'lender.video': LenderVideo;
       'page.personal-loan-offered': PagePersonalLoanOffered;
+      'product.province-override': ProductProvinceOverride;
+      'report.chart': ReportChart;
+      'report.key-finding': ReportKeyFinding;
       'shared.seo': SharedSeo;
     }
   }

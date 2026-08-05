@@ -113,6 +113,63 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.seo"
+    },
+    "card_type": {
+      "type": "enumeration",
+      "enum": [
+        "cash_back",
+        "travel",
+        "low_interest",
+        "secured",
+        "credit_builder",
+        "no_fee",
+        "rewards",
+        "student",
+        "business",
+        "other"
+      ]
+    },
+    "annual_fee_amount": {
+      "type": "decimal"
+    },
+    "purchase_apr_value": {
+      "type": "decimal"
+    },
+    "cash_advance_apr_value": {
+      "type": "decimal"
+    },
+    "min_deposit": {
+      "type": "decimal"
+    },
+    "credit_needed": {
+      "type": "enumeration",
+      "enum": [
+        "any",
+        "poor",
+        "fair",
+        "good",
+        "excellent"
+      ]
+    },
+    "referral_url": {
+      "type": "string"
+    },
+    "compliance_copy": {
+      "type": "text"
+    },
+    "checked_date": {
+      "type": "date"
+    },
+    "province_overrides": {
+      "type": "component",
+      "component": "product.province-override",
+      "repeatable": true
+    },
+    "tldr_answer": {
+      "type": "text"
+    },
+    "action_log_refs": {
+      "type": "json"
     }
   }
 }

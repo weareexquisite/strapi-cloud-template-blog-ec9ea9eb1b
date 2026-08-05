@@ -52,6 +52,27 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.seo"
+    },
+    "duration_seconds": {
+      "type": "integer"
+    },
+    "transcript": {
+      "type": "richtext"
+    },
+    "related_lender": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::lender.lender"
+    },
+    "related_company": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::company.company"
+    },
+    "related_post": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::post.post"
     }
   }
 }

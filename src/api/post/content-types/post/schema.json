@@ -5,7 +5,7 @@
     "singularName": "post",
     "pluralName": "posts",
     "displayName": "Post",
-    "description": "Blog posts migrated from WP \"post\" type (flat blog — no categories/tags)"
+    "description": "Blog posts migrated from WP \"post\" type (flat blog \u2014 no categories/tags)"
   },
   "options": {
     "draftAndPublish": true
@@ -50,6 +50,12 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.seo"
+    },
+    "tldr_answer": {
+      "type": "text"
+    },
+    "action_log_refs": {
+      "type": "json"
     }
   }
 }

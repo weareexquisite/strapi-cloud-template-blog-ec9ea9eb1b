@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_badge_years_earned",
+  "info": {
+    "displayName": "Year earned"
+  },
+  "attributes": {
+    "year": {
+      "type": "integer",
+      "required": true,
+      "min": 2010,
+      "max": 2100
+    }
+  }
+}

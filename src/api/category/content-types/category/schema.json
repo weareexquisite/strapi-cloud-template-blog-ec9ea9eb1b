@@ -45,6 +45,12 @@
       "type": "component",
       "repeatable": true,
       "component": "lender.faq-item"
+    },
+    "tldr_answer": {
+      "type": "text"
+    },
+    "action_log_refs": {
+      "type": "json"
     }
   }
 }

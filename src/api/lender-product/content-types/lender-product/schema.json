@@ -1,0 +1,144 @@
+{
+  "kind": "collectionType",
+  "collectionName": "lender_products",
+  "info": {
+    "singularName": "lender-product",
+    "pluralName": "lender-products",
+    "displayName": "Lender Product",
+    "description": "Per-product structured record - the lender data standard (Section 5)"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "description": "Display title, e.g. 'Business Term Loan'"
+    },
+    "lender": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::lender.lender",
+      "inversedBy": "products"
+    },
+    "product_type": {
+      "type": "enumeration",
+      "enum": [
+        "term_loan",
+        "line_of_credit",
+        "merchant_cash_advance",
+        "equipment_financing",
+        "invoice_factoring",
+        "instalment_loan",
+        "personal_line_of_credit",
+        "secured_personal_loan",
+        "home_equity_loan",
+        "mortgage",
+        "auto_loan",
+        "truck_loan",
+        "other"
+      ],
+      "required": true
+    },
+    "audience": {
+      "type": "enumeration",
+      "enum": [
+        "business",
+        "personal"
+      ],
+      "required": true
+    },
+    "amount_min": {
+      "type": "biginteger",
+      "required": true
+    },
+    "amount_max": {
+      "type": "biginteger",
+      "required": true
+    },
+    "rate_min": {
+      "type": "decimal",
+      "required": true
+    },
+    "rate_max": {
+      "type": "decimal"
+    },
+    "rate_type": {
+      "type": "enumeration",
+      "enum": [
+        "apr",
+        "factor",
+        "monthly"
+      ],
+      "required": true,
+      "description": "MCAs display factor rates or cost per $10k, never APR (Section 16)"
+    },
+    "term_min_months": {
+      "type": "integer"
+    },
+    "term_max_months": {
+      "type": "integer"
+    },
+    "funding_speed_hours": {
+      "type": "integer",
+      "description": "Typical fastest funding, in hours"
+    },
+    "min_income_monthly": {
+      "type": "integer"
+    },
+    "min_credit_band": {
+      "type": "enumeration",
+      "enum": [
+        "any",
+        "poor",
+        "fair",
+        "good",
+        "excellent"
+      ]
+    },
+    "income_types_accepted": {
+      "type": "json",
+      "description": "Array from: employment, self_employment, disability, pension, benefits, other"
+    },
+    "min_monthly_revenue": {
+      "type": "integer"
+    },
+    "min_time_in_business_months": {
+      "type": "integer"
+    },
+    "provinces_served": {
+      "type": "json",
+      "required": true,
+      "description": "Array of province codes: AB, BC, MB, NB, NL, NS, NT, NU, ON, PE, QC, SK, YT"
+    },
+    "fees": {
+      "type": "richtext"
+    },
+    "prepayment": {
+      "type": "text"
+    },
+    "docs_required": {
+      "type": "json",
+      "description": "Array of document names"
+    },
+    "good_to_know": {
+      "type": "text",
+      "description": "One-line caveat shown on the product block"
+    },
+    "province_overrides": {
+      "type": "component",
+      "component": "product.province-override",
+      "repeatable": true
+    },
+    "apply_slug": {
+      "type": "string",
+      "description": "preferred_lender value carried into apply.smarter.loans"
+    },
+    "rates_last_reviewed": {
+      "type": "date",
+      "required": true,
+      "description": ">90 days old = flagged for re-verification (Section 5)"
+    }
+  }
+}
