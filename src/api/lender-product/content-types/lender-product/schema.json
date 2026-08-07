@@ -70,10 +70,12 @@
       "enum": [
         "apr",
         "factor",
-        "monthly"
+        "monthly",
+        "fee_per_100",
+        "fee_based"
       ],
       "required": false,
-      "description": "MCAs display factor rates or cost per $10k, never APR (Section 16)"
+      "description": "MCAs display factor rates or cost per $10k, never APR (Section 16). fee_per_100: payday-style '$14 per $100 borrowed' (rate_min = dollars per $100). fee_based: '0% interest' products where cost lives in fees (rate_min = 0)."
     },
     "term_min_months": {
       "type": "integer"
