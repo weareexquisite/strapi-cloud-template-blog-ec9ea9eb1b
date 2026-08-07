@@ -20,6 +20,10 @@
       "type": "string",
       "required": true
     },
+    "heroTitle": {
+      "type": "string",
+      "description": "Short marketing hero headline (e.g. 'Get a personal loan in Canada'). Falls back to title when empty. The SEO <title> comes from the seo component, not this."
+    },
     "slug": {
       "type": "string"
     },
