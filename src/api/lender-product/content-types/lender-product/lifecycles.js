@@ -25,6 +25,10 @@ const COMMON = ['product_type', 'amount_min', 'amount_max', 'rate_min',
   'rate_type', 'funding_speed_hours', 'rates_last_reviewed'];
 const BUSINESS = ['min_monthly_revenue', 'min_time_in_business_months'];
 const PERSONAL = ['min_income_monthly', 'min_credit_band'];
+// Asset-secured personal verticals: qualification runs on the asset and
+// credit band, not published income minimums - the Data Standard records
+// income as N/A for these (workbook ruling, Aug 2026).
+const ASSET_SECURED = ['mortgage', 'home_equity_loan', 'auto_loan'];
 
 function missingFields(record) {
   const missing = [];
@@ -39,11 +43,15 @@ function missingFields(record) {
       if (record[f] === null || record[f] === undefined) missing.push(f);
     }
   } else if (record.audience === 'personal') {
+    const assetSecured = ASSET_SECURED.includes(record.product_type);
     for (const f of PERSONAL) {
+      if (assetSecured && f === 'min_income_monthly') continue;
       if (record[f] === null || record[f] === undefined || record[f] === '') missing.push(f);
     }
-    const types = record.income_types_accepted;
-    if (!Array.isArray(types) || types.length === 0) missing.push('income_types_accepted');
+    if (!assetSecured) {
+      const types = record.income_types_accepted;
+      if (!Array.isArray(types) || types.length === 0) missing.push('income_types_accepted');
+    }
   } else {
     missing.push('audience');
   }
