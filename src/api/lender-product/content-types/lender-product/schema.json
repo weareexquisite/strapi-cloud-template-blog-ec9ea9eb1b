@@ -100,6 +100,12 @@
         "excellent"
       ]
     },
+    "min_credit_score": {
+      "type": "integer",
+      "min": 300,
+      "max": 900,
+      "description": "Numeric minimum score where the lender publishes one (business products; personal uses min_credit_band)"
+    },
     "income_types_accepted": {
       "type": "json",
       "description": "Array from: employment, self_employment, disability, pension, benefits, other"
