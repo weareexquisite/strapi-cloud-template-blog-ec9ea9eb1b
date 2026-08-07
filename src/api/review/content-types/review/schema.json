@@ -45,6 +45,19 @@
       "type": "component",
       "repeatable": false,
       "component": "shared.seo"
+    },
+    "review_date": {
+      "type": "date",
+      "description": "When the borrower left the review. Renders only when set - migration createdAt is NOT a review date (honesty rule)."
+    },
+    "verified_borrower": {
+      "type": "boolean",
+      "default": false,
+      "description": "Set only when our systems confirm a funded application (Master Doc s17). Gates the visible flag AND schema.org Review markup."
+    },
+    "product_label": {
+      "type": "string",
+      "description": "Which product the review concerns, e.g. 'Term loan'"
     }
   }
 }
