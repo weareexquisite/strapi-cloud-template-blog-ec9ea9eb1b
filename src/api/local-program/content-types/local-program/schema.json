@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "local_programs",
+  "info": {
+    "singularName": "local-program",
+    "pluralName": "local-programs",
+    "displayName": "Local Program",
+    "description": "Location-page local programs (LOC-03). Created empty; populated in a later pass."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "geo_code": {
+      "type": "string",
+      "required": true
+    },
+    "geo_level": {
+      "type": "enumeration",
+      "enum": [
+        "province",
+        "city"
+      ]
+    },
+    "program_name": {
+      "type": "string",
+      "required": true
+    },
+    "one_liner": {
+      "type": "text"
+    },
+    "url": {
+      "type": "string"
+    },
+    "last_verified": {
+      "type": "date"
+    }
+  }
+}

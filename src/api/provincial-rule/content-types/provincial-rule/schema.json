@@ -1,0 +1,75 @@
+{
+  "kind": "collectionType",
+  "collectionName": "provincial_rules",
+  "info": {
+    "singularName": "provincial-rule",
+    "pluralName": "provincial-rules",
+    "displayName": "Provincial Rule",
+    "description": "Regulator-verified lending rules per province/territory. Fields mirror provincial-rules-matrix-v2 columns. RENDER GATE: content whose confidence is VERIFY or UNRESOLVED must not render on live pages."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "region": {
+      "type": "string",
+      "required": true
+    },
+    "code": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "payday_regime_designated": {
+      "type": "string",
+      "description": "Yes / No with reason. Territories and QC are not designated."
+    },
+    "payday_cap_per_100": {
+      "type": "decimal",
+      "description": "Dollar fee per $100 borrowed. Null where no regime."
+    },
+    "payday_max_loan": {
+      "type": "string"
+    },
+    "payday_max_pct_net_pay": {
+      "type": "string",
+      "description": "e.g. 50%. MB and NB are 30%."
+    },
+    "payday_max_term_days": {
+      "type": "string",
+      "description": "AB carries a 42-day minimum term note"
+    },
+    "cooling_off": {
+      "type": "text"
+    },
+    "rollover_ban": {
+      "type": "string"
+    },
+    "extended_payment_plan": {
+      "type": "text"
+    },
+    "licensing_regulator": {
+      "type": "string"
+    },
+    "licence_register": {
+      "type": "string"
+    },
+    "high_cost_credit_regime": {
+      "type": "text",
+      "description": "Provincial HCC licensing regime and threshold, or No"
+    },
+    "confidence": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "text"
+    },
+    "source_url": {
+      "type": "string"
+    },
+    "last_reviewed": {
+      "type": "date"
+    }
+  }
+}

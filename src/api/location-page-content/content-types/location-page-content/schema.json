@@ -1,0 +1,67 @@
+{
+  "kind": "collectionType",
+  "collectionName": "location_page_contents",
+  "info": {
+    "singularName": "location-page-content",
+    "pluralName": "location-page-contents",
+    "displayName": "Location Page Content",
+    "description": "Per-page editorial modules for location pages (LOC-03 Wave 1, 46 pages). Tokens like [lender_count] are stored verbatim and resolve at render."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "page_url": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "geo_code": {
+      "type": "string",
+      "required": true
+    },
+    "vertical": {
+      "type": "enumeration",
+      "enum": [
+        "personal",
+        "payday",
+        "business",
+        "auto",
+        "home-equity",
+        "mortgage",
+        "equipment"
+      ]
+    },
+    "level": {
+      "type": "enumeration",
+      "enum": [
+        "provincial",
+        "city"
+      ]
+    },
+    "rules_block": {
+      "type": "json",
+      "description": "Array of rule lines rendered on provincial payday pages. Null where rules render from provincial-rule directly."
+    },
+    "regulator": {
+      "type": "string",
+      "description": "Regulator name used in the source line beneath the rules block"
+    },
+    "faqs": {
+      "type": "json"
+    },
+    "rules_line_override": {
+      "type": "text"
+    },
+    "city_lender_facts": {
+      "type": "json"
+    },
+    "meta_title": {
+      "type": "string"
+    },
+    "meta_description": {
+      "type": "text"
+    }
+  }
+}

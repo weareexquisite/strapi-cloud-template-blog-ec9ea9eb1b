@@ -1,0 +1,128 @@
+{
+  "kind": "collectionType",
+  "collectionName": "geo_stats",
+  "info": {
+    "singularName": "geo-stat",
+    "pluralName": "geo-stats",
+    "displayName": "Geo Stat",
+    "description": "Location-page first-party stats, one row per geography x vertical, keyed vertical/geo_code (LOC-03). 125 rows for H1 2026."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "key": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "vertical": {
+      "type": "enumeration",
+      "enum": [
+        "personal",
+        "payday",
+        "business",
+        "auto",
+        "home-equity",
+        "mortgage",
+        "equipment"
+      ],
+      "required": true
+    },
+    "geo_type": {
+      "type": "enumeration",
+      "enum": [
+        "national",
+        "province",
+        "city"
+      ],
+      "required": true
+    },
+    "geo_code": {
+      "type": "string",
+      "required": true
+    },
+    "geo_name": {
+      "type": "string"
+    },
+    "province": {
+      "type": "string"
+    },
+    "period": {
+      "type": "string",
+      "required": true
+    },
+    "prior_period": {
+      "type": "string"
+    },
+    "application_count": {
+      "type": "integer"
+    },
+    "sample_n": {
+      "type": "integer"
+    },
+    "avg_request": {
+      "type": "integer"
+    },
+    "share_under_5k": {
+      "type": "decimal"
+    },
+    "share_under_10k": {
+      "type": "decimal"
+    },
+    "top_purpose": {
+      "type": "string"
+    },
+    "purpose_distribution": {
+      "type": "json"
+    },
+    "avg_by_purpose": {
+      "type": "json"
+    },
+    "top_industries": {
+      "type": "json"
+    },
+    "fair_poor_share": {
+      "type": "decimal"
+    },
+    "band_distribution": {
+      "type": "json"
+    },
+    "fair_poor_suppress": {
+      "type": "boolean"
+    },
+    "unknown_band_share": {
+      "type": "decimal"
+    },
+    "band_coverage": {
+      "type": "json"
+    },
+    "city_share_within_province": {
+      "type": "json"
+    },
+    "yoy": {
+      "type": "json"
+    },
+    "suppress": {
+      "type": "boolean",
+      "required": true
+    },
+    "suppress_reasons": {
+      "type": "json"
+    },
+    "verify": {
+      "type": "boolean",
+      "required": true
+    },
+    "verify_reasons": {
+      "type": "json"
+    },
+    "metric_flags": {
+      "type": "json"
+    },
+    "ingest_notes": {
+      "type": "json"
+    }
+  }
+}
