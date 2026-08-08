@@ -19,6 +19,7 @@
     "geo_level": {
       "type": "enumeration",
       "enum": [
+        "federal",
         "province",
         "city"
       ]

@@ -624,7 +624,7 @@ export interface ApiCompanyProductCompanyProduct
       true
     >;
     publishedAt: Schema.Attribute.DateTime;
-    rates_last_reviewed: Schema.Attribute.Date & Schema.Attribute.Required;
+    rates_last_reviewed: Schema.Attribute.Date;
     referral_url: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -926,6 +926,78 @@ export interface ApiExpertExpert extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiGeoStatGeoStat extends Struct.CollectionTypeSchema {
+  collectionName: 'geo_stats';
+  info: {
+    description: 'Location-page first-party stats, one row per geography x vertical, keyed vertical/geo_code (LOC-03). 125 rows for H1 2026.';
+    displayName: 'Geo Stat';
+    pluralName: 'geo-stats';
+    singularName: 'geo-stat';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    application_count: Schema.Attribute.Integer;
+    avg_by_purpose: Schema.Attribute.JSON;
+    avg_request: Schema.Attribute.Integer;
+    band_coverage: Schema.Attribute.JSON;
+    band_distribution: Schema.Attribute.JSON;
+    city_share_within_province: Schema.Attribute.JSON;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    fair_poor_share: Schema.Attribute.Decimal;
+    fair_poor_suppress: Schema.Attribute.Boolean;
+    geo_code: Schema.Attribute.String & Schema.Attribute.Required;
+    geo_name: Schema.Attribute.String;
+    geo_type: Schema.Attribute.Enumeration<['national', 'province', 'city']> &
+      Schema.Attribute.Required;
+    ingest_notes: Schema.Attribute.JSON;
+    key: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::geo-stat.geo-stat'
+    > &
+      Schema.Attribute.Private;
+    metric_flags: Schema.Attribute.JSON;
+    period: Schema.Attribute.String & Schema.Attribute.Required;
+    prior_period: Schema.Attribute.String;
+    province: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    purpose_distribution: Schema.Attribute.JSON;
+    sample_n: Schema.Attribute.Integer;
+    share_under_10k: Schema.Attribute.Decimal;
+    share_under_5k: Schema.Attribute.Decimal;
+    suppress: Schema.Attribute.Boolean & Schema.Attribute.Required;
+    suppress_reasons: Schema.Attribute.JSON;
+    top_industries: Schema.Attribute.JSON;
+    top_purpose: Schema.Attribute.String;
+    unknown_band_share: Schema.Attribute.Decimal;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    verify: Schema.Attribute.Boolean & Schema.Attribute.Required;
+    verify_reasons: Schema.Attribute.JSON;
+    vertical: Schema.Attribute.Enumeration<
+      [
+        'personal',
+        'payday',
+        'business',
+        'auto',
+        'home-equity',
+        'mortgage',
+        'equipment',
+      ]
+    > &
+      Schema.Attribute.Required;
+    yoy: Schema.Attribute.JSON;
+  };
+}
+
 export interface ApiGlobalSettingGlobalSetting extends Struct.SingleTypeSchema {
   collectionName: 'global_setting';
   info: {
@@ -1087,8 +1159,8 @@ export interface ApiLenderProductLenderProduct
     draftAndPublish: true;
   };
   attributes: {
-    amount_max: Schema.Attribute.BigInteger & Schema.Attribute.Required;
-    amount_min: Schema.Attribute.BigInteger & Schema.Attribute.Required;
+    amount_max: Schema.Attribute.BigInteger;
+    amount_min: Schema.Attribute.BigInteger;
     apply_slug: Schema.Attribute.String;
     audience: Schema.Attribute.Enumeration<['business', 'personal']> &
       Schema.Attribute.Required;
@@ -1112,6 +1184,14 @@ export interface ApiLenderProductLenderProduct
     min_credit_band: Schema.Attribute.Enumeration<
       ['any', 'poor', 'fair', 'good', 'excellent']
     >;
+    min_credit_score: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 900;
+          min: 300;
+        },
+        number
+      >;
     min_income_monthly: Schema.Attribute.Integer;
     min_monthly_revenue: Schema.Attribute.Integer;
     min_time_in_business_months: Schema.Attribute.Integer;
@@ -1140,13 +1220,14 @@ export interface ApiLenderProductLenderProduct
       'product.province-override',
       true
     >;
-    provinces_served: Schema.Attribute.JSON & Schema.Attribute.Required;
+    provinces_served: Schema.Attribute.JSON;
     publishedAt: Schema.Attribute.DateTime;
     rate_max: Schema.Attribute.Decimal;
-    rate_min: Schema.Attribute.Decimal & Schema.Attribute.Required;
-    rate_type: Schema.Attribute.Enumeration<['apr', 'factor', 'monthly']> &
-      Schema.Attribute.Required;
-    rates_last_reviewed: Schema.Attribute.Date & Schema.Attribute.Required;
+    rate_min: Schema.Attribute.Decimal;
+    rate_type: Schema.Attribute.Enumeration<
+      ['apr', 'factor', 'monthly', 'fee_per_100', 'fee_based']
+    >;
+    rates_last_reviewed: Schema.Attribute.Date;
     term_max_months: Schema.Attribute.Integer;
     term_min_months: Schema.Attribute.Integer;
     updatedAt: Schema.Attribute.DateTime;
@@ -1264,6 +1345,93 @@ export interface ApiLenderLender extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiLocalProgramLocalProgram
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'local_programs';
+  info: {
+    description: 'Location-page local programs (LOC-03). Created empty; populated in a later pass.';
+    displayName: 'Local Program';
+    pluralName: 'local-programs';
+    singularName: 'local-program';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    geo_code: Schema.Attribute.String & Schema.Attribute.Required;
+    geo_level: Schema.Attribute.Enumeration<['province', 'city']>;
+    last_verified: Schema.Attribute.Date;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::local-program.local-program'
+    > &
+      Schema.Attribute.Private;
+    one_liner: Schema.Attribute.Text;
+    program_name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    url: Schema.Attribute.String;
+  };
+}
+
+export interface ApiLocationPageContentLocationPageContent
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'location_page_contents';
+  info: {
+    description: 'Per-page editorial modules for location pages (LOC-03 Wave 1, 46 pages). Tokens like [lender_count] are stored verbatim and resolve at render.';
+    displayName: 'Location Page Content';
+    pluralName: 'location-page-contents';
+    singularName: 'location-page-content';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    city_lender_facts: Schema.Attribute.JSON;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    faqs: Schema.Attribute.JSON;
+    geo_code: Schema.Attribute.String & Schema.Attribute.Required;
+    level: Schema.Attribute.Enumeration<['provincial', 'city']>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::location-page-content.location-page-content'
+    > &
+      Schema.Attribute.Private;
+    meta_description: Schema.Attribute.Text;
+    meta_title: Schema.Attribute.String;
+    page_url: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    publishedAt: Schema.Attribute.DateTime;
+    regulator: Schema.Attribute.String;
+    rules_block: Schema.Attribute.JSON;
+    rules_line_override: Schema.Attribute.Text;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    vertical: Schema.Attribute.Enumeration<
+      [
+        'personal',
+        'payday',
+        'business',
+        'auto',
+        'home-equity',
+        'mortgage',
+        'equipment',
+      ]
+    >;
+  };
+}
+
 export interface ApiPagePage extends Struct.CollectionTypeSchema {
   collectionName: 'pages';
   info: {
@@ -1292,6 +1460,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
     ctaUrl: Schema.Attribute.Text;
     faqContent: Schema.Attribute.Component<'lender.faq-item', true>;
     featuredImageUrl: Schema.Attribute.String;
+    heroTitle: Schema.Attribute.String;
     leftContent: Schema.Attribute.RichText;
     loanTypeDetail: Schema.Attribute.RichText;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -1363,6 +1532,54 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
     wp_id: Schema.Attribute.Integer &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
+  };
+}
+
+export interface ApiProvincialRuleProvincialRule
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'provincial_rules';
+  info: {
+    description: 'Regulator-verified lending rules per province/territory. Fields mirror provincial-rules-matrix-v2 columns. RENDER GATE: content whose confidence is VERIFY or UNRESOLVED must not render on live pages.';
+    displayName: 'Provincial Rule';
+    pluralName: 'provincial-rules';
+    singularName: 'provincial-rule';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    code: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    confidence: Schema.Attribute.String;
+    cooling_off: Schema.Attribute.Text;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    extended_payment_plan: Schema.Attribute.Text;
+    high_cost_credit_regime: Schema.Attribute.Text;
+    last_reviewed: Schema.Attribute.Date;
+    licence_register: Schema.Attribute.String;
+    licensing_regulator: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::provincial-rule.provincial-rule'
+    > &
+      Schema.Attribute.Private;
+    notes: Schema.Attribute.Text;
+    payday_cap_per_100: Schema.Attribute.Decimal;
+    payday_max_loan: Schema.Attribute.String;
+    payday_max_pct_net_pay: Schema.Attribute.String;
+    payday_max_term_days: Schema.Attribute.String;
+    payday_regime_designated: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    region: Schema.Attribute.String & Schema.Attribute.Required;
+    rollover_ban: Schema.Attribute.String;
+    source_url: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -1447,15 +1664,19 @@ export interface ApiReviewReview extends Struct.CollectionTypeSchema {
       'api::review.review'
     > &
       Schema.Attribute.Private;
+    product_label: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     rating: Schema.Attribute.Decimal;
     review: Schema.Attribute.Text;
+    review_date: Schema.Attribute.Date;
     reviewerName: Schema.Attribute.String;
     reviewTitle: Schema.Attribute.String;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    verified_borrower: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
     wp_id: Schema.Attribute.Integer &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
@@ -2075,13 +2296,17 @@ declare module '@strapi/strapi' {
       'api::credit-card.credit-card': ApiCreditCardCreditCard;
       'api::debt-solution.debt-solution': ApiDebtSolutionDebtSolution;
       'api::expert.expert': ApiExpertExpert;
+      'api::geo-stat.geo-stat': ApiGeoStatGeoStat;
       'api::global-setting.global-setting': ApiGlobalSettingGlobalSetting;
       'api::government-program.government-program': ApiGovernmentProgramGovernmentProgram;
       'api::homepage.homepage': ApiHomepageHomepage;
       'api::lender-product.lender-product': ApiLenderProductLenderProduct;
       'api::lender.lender': ApiLenderLender;
+      'api::local-program.local-program': ApiLocalProgramLocalProgram;
+      'api::location-page-content.location-page-content': ApiLocationPageContentLocationPageContent;
       'api::page.page': ApiPagePage;
       'api::post.post': ApiPostPost;
+      'api::provincial-rule.provincial-rule': ApiProvincialRuleProvincialRule;
       'api::report.report': ApiReportReport;
       'api::review.review': ApiReviewReview;
       'api::testimonial.testimonial': ApiTestimonialTestimonial;
