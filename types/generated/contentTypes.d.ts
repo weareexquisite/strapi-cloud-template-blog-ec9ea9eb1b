@@ -551,6 +551,7 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.String;
     taxonomy: Schema.Attribute.Enumeration<
       [
@@ -1301,6 +1302,7 @@ export interface ApiLenderLender extends Struct.CollectionTypeSchema {
     numberOfCustomers: Schema.Attribute.String;
     phone: Schema.Attribute.String;
     phone2: Schema.Attribute.String;
+    preferred_lender_id: Schema.Attribute.Integer;
     primaryLoanCategory: Schema.Attribute.Relation<
       'oneToOne',
       'api::category.category'
@@ -1362,7 +1364,7 @@ export interface ApiLocalProgramLocalProgram
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     geo_code: Schema.Attribute.String & Schema.Attribute.Required;
-    geo_level: Schema.Attribute.Enumeration<['province', 'city']>;
+    geo_level: Schema.Attribute.Enumeration<['federal', 'province', 'city']>;
     last_verified: Schema.Attribute.Date;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -1447,6 +1449,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
     action_log_refs: Schema.Attribute.JSON;
     addFaqToThePage: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<false>;
+    author: Schema.Attribute.Relation<'manyToOne', 'api::author.author'>;
     body: Schema.Attribute.RichText;
     buttonLink: Schema.Attribute.Text;
     buttonTitle: Schema.Attribute.Text;
@@ -1479,6 +1482,8 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::lender.lender'
     >;
+    reviewed_date: Schema.Attribute.Date;
+    reviewer: Schema.Attribute.Relation<'manyToOne', 'api::author.author'>;
     reviewNote: Schema.Attribute.Text;
     rightContent: Schema.Attribute.RichText;
     seo: Schema.Attribute.Component<'shared.seo', false>;
@@ -1509,6 +1514,7 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
   };
   attributes: {
     action_log_refs: Schema.Attribute.JSON;
+    author: Schema.Attribute.Relation<'manyToOne', 'api::author.author'>;
     body: Schema.Attribute.RichText;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1521,6 +1527,8 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
     needsReview: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     publishDate: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
+    reviewed_date: Schema.Attribute.Date;
+    reviewer: Schema.Attribute.Relation<'manyToOne', 'api::author.author'>;
     reviewNote: Schema.Attribute.Text;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.String;
@@ -1586,7 +1594,7 @@ export interface ApiProvincialRuleProvincialRule
 export interface ApiReportReport extends Struct.CollectionTypeSchema {
   collectionName: 'reports';
   info: {
-    description: 'Smarter Loans Research editions (Sections 9, 23)';
+    description: 'Smarter Loans Research editions (research hub package, Aug 2026)';
     displayName: 'Report';
     pluralName: 'reports';
     singularName: 'report';
@@ -1596,16 +1604,19 @@ export interface ApiReportReport extends Struct.CollectionTypeSchema {
   };
   attributes: {
     action_log_refs: Schema.Attribute.JSON;
+    author: Schema.Attribute.Relation<'manyToOne', 'api::author.author'>;
     cadence: Schema.Attribute.Enumeration<['quarterly', 'annual']> &
       Schema.Attribute.Required;
-    charts: Schema.Attribute.Component<'report.chart', true>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     data_period_end: Schema.Attribute.Date;
     data_period_start: Schema.Attribute.Date;
+    dek: Schema.Attribute.Text;
+    edition_label: Schema.Attribute.String;
+    executive_quote: Schema.Attribute.Text;
     faqContent: Schema.Attribute.Component<'lender.faq-item', true>;
-    headline_finding: Schema.Attribute.Text & Schema.Attribute.Required;
+    hero_figure: Schema.Attribute.Media<'images'>;
     key_findings: Schema.Attribute.Component<'report.key-finding', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -1614,10 +1625,14 @@ export interface ApiReportReport extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     methodology: Schema.Attribute.RichText & Schema.Attribute.Required;
+    next_release_label: Schema.Attribute.String;
+    next_release_month: Schema.Attribute.String;
     pdf: Schema.Attribute.Media<'files'>;
-    period: Schema.Attribute.String & Schema.Attribute.Required;
+    period_label: Schema.Attribute.String;
     permanent_slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    publication_date: Schema.Attribute.Date;
     publishedAt: Schema.Attribute.DateTime;
+    quote_attribution: Schema.Attribute.String;
     report_family: Schema.Attribute.Enumeration<
       [
         'lending_demand_index',
@@ -1630,9 +1645,54 @@ export interface ApiReportReport extends Struct.CollectionTypeSchema {
       ]
     > &
       Schema.Attribute.Required;
+    reviewed_date: Schema.Attribute.Date;
+    sections: Schema.Attribute.DynamicZone<
+      [
+        'report.section-text',
+        'report.figure-with-table',
+        'report.pull-quote',
+        'report.data-table',
+      ]
+    >;
     seo: Schema.Attribute.Component<'shared.seo', false>;
+    subtitle: Schema.Attribute.Text;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     tldr_answer: Schema.Attribute.Text & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiResearchMethodologyResearchMethodology
+  extends Struct.SingleTypeSchema {
+  collectionName: 'research_methodologies';
+  info: {
+    description: 'Standing methodology page - cited externally, must be stable';
+    displayName: 'Research Methodology';
+    pluralName: 'research-methodologies';
+    singularName: 'research-methodology';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    body: Schema.Attribute.RichText;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    intro: Schema.Attribute.RichText;
+    last_updated: Schema.Attribute.Date;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::research-methodology.research-methodology'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    rules: Schema.Attribute.Component<'report.methodology-rule', true>;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1709,9 +1769,19 @@ export interface ApiTestimonialTestimonial extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     logo: Schema.Attribute.Media<'images'>;
     publishedAt: Schema.Attribute.DateTime;
+    rating: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 5;
+          min: 1;
+        },
+        number
+      >;
     review: Schema.Attribute.Text;
+    reviewDate: Schema.Attribute.Date;
     reviewerName: Schema.Attribute.String;
     reviewTitle: Schema.Attribute.String;
+    source: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -2308,6 +2378,7 @@ declare module '@strapi/strapi' {
       'api::post.post': ApiPostPost;
       'api::provincial-rule.provincial-rule': ApiProvincialRuleProvincialRule;
       'api::report.report': ApiReportReport;
+      'api::research-methodology.research-methodology': ApiResearchMethodologyResearchMethodology;
       'api::review.review': ApiReviewReview;
       'api::testimonial.testimonial': ApiTestimonialTestimonial;
       'api::video-entry.video-entry': ApiVideoEntryVideoEntry;

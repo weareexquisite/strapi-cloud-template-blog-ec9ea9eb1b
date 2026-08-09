@@ -203,17 +203,32 @@ export interface ProductProvinceOverride extends Struct.ComponentSchema {
   };
 }
 
-export interface ReportChart extends Struct.ComponentSchema {
-  collectionName: 'components_report_charts';
+export interface ReportDataTable extends Struct.ComponentSchema {
+  collectionName: 'components_report_data_tables';
   info: {
-    description: 'Every chart ships with its data as an HTML table (Section 9)';
-    displayName: 'Chart';
+    description: 'Standalone crawlable table (e.g. provincial index when charts are withheld)';
+    displayName: 'Data table';
   };
   attributes: {
-    data_table: Schema.Attribute.RichText & Schema.Attribute.Required;
-    image: Schema.Attribute.Media<'images'>;
-    source_note: Schema.Attribute.String;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
+    footnote: Schema.Attribute.Text;
+    table_headers: Schema.Attribute.JSON;
+    table_rows: Schema.Attribute.JSON;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface ReportFigureWithTable extends Struct.ComponentSchema {
+  collectionName: 'components_report_figures_with_tables';
+  info: {
+    description: 'A chart never ships without its data table - the table is the machine-readable version';
+    displayName: 'Figure with table';
+  };
+  attributes: {
+    caption: Schema.Attribute.String;
+    footnote: Schema.Attribute.Text;
+    image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    table_headers: Schema.Attribute.JSON;
+    table_rows: Schema.Attribute.JSON;
   };
 }
 
@@ -223,8 +238,43 @@ export interface ReportKeyFinding extends Struct.ComponentSchema {
     displayName: 'Key finding';
   };
   attributes: {
-    finding: Schema.Attribute.Text & Schema.Attribute.Required;
+    body: Schema.Attribute.Text;
     stat: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ReportMethodologyRule extends Struct.ComponentSchema {
+  collectionName: 'components_report_methodology_rules';
+  info: {
+    displayName: 'Methodology rule';
+  };
+  attributes: {
+    detail: Schema.Attribute.Text;
+    rule: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ReportPullQuote extends Struct.ComponentSchema {
+  collectionName: 'components_report_pull_quotes';
+  info: {
+    displayName: 'Pull quote';
+  };
+  attributes: {
+    attribution: Schema.Attribute.String;
+    quote: Schema.Attribute.Text & Schema.Attribute.Required;
+  };
+}
+
+export interface ReportSectionText extends Struct.ComponentSchema {
+  collectionName: 'components_report_section_texts';
+  info: {
+    description: 'Section titles are findings, not labels';
+    displayName: 'Section text';
+  };
+  attributes: {
+    body: Schema.Attribute.RichText;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -239,6 +289,8 @@ export interface SharedSeo extends Struct.ComponentSchema {
     focusKeyword: Schema.Attribute.String;
     metaDescription: Schema.Attribute.Text;
     metaTitle: Schema.Attribute.String;
+    og_description: Schema.Attribute.Text;
+    og_title: Schema.Attribute.String;
   };
 }
 
@@ -259,8 +311,12 @@ declare module '@strapi/strapi' {
       'lender.video': LenderVideo;
       'page.personal-loan-offered': PagePersonalLoanOffered;
       'product.province-override': ProductProvinceOverride;
-      'report.chart': ReportChart;
+      'report.data-table': ReportDataTable;
+      'report.figure-with-table': ReportFigureWithTable;
       'report.key-finding': ReportKeyFinding;
+      'report.methodology-rule': ReportMethodologyRule;
+      'report.pull-quote': ReportPullQuote;
+      'report.section-text': ReportSectionText;
       'shared.seo': SharedSeo;
     }
   }
