@@ -118,6 +118,21 @@
     },
     "action_log_refs": {
       "type": "json"
+    },
+    "author": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::author.author"
+    },
+    "reviewer": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::author.author",
+      "description": "Named reviewer (master doc s20). Set only when a genuine review happened - never backfilled onto legacy content"
+    },
+    "reviewed_date": {
+      "type": "date",
+      "description": "Renders 'Reviewed {date}' only when a reviewer is set"
     }
   }
 }
