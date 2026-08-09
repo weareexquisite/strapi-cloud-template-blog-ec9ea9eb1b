@@ -32,6 +32,20 @@
       "type": "boolean",
       "default": false
     },
+    "rating": {
+      "type": "integer",
+      "min": 1,
+      "max": 5,
+      "description": "Star rating shown on the card; omitted from display when unset"
+    },
+    "reviewDate": {
+      "type": "date",
+      "description": "Date the review was originally left (not the CMS entry date)"
+    },
+    "source": {
+      "type": "string",
+      "description": "Where the review came from, e.g. Google — rendered as the source label"
+    },
     "logo": {
       "type": "media",
       "multiple": false,
