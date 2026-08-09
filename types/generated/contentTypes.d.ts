@@ -1049,7 +1049,7 @@ export interface ApiGovernmentProgramGovernmentProgram
   extends Struct.CollectionTypeSchema {
   collectionName: 'government_programs';
   info: {
-    description: 'Structured program records feeding the hub, matcher, category blocks and city pages (Section 10)';
+    description: 'Government financing cluster: 30 program records feeding the hub, checker, program and browse pages (government financing package, Aug 2026)';
     displayName: 'Government Program';
     pluralName: 'government-programs';
     singularName: 'government-program';
@@ -1059,42 +1059,77 @@ export interface ApiGovernmentProgramGovernmentProgram
   };
   attributes: {
     action_log_refs: Schema.Attribute.JSON;
-    applied_through: Schema.Attribute.String & Schema.Attribute.Required;
+    administered_by: Schema.Attribute.String;
+    amount_max: Schema.Attribute.BigInteger;
+    amount_min: Schema.Attribute.BigInteger;
+    amount_structure: Schema.Attribute.Text;
+    apply_through: Schema.Attribute.Text;
+    confidence: Schema.Attribute.String;
+    cost: Schema.Attribute.Text;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    eligible_stages: Schema.Attribute.JSON & Schema.Attribute.Required;
+    eligibility: Schema.Attribute.JSON;
+    entity_label: Schema.Attribute.String;
+    entity_type: Schema.Attribute.Enumeration<
+      [
+        'federal_government',
+        'federal_government_via_partners',
+        'provincial_government',
+        'provincial_agency',
+        'crown_corporation',
+        'provincial_crown_corporation',
+        'non_profit',
+        'industry_non_profit',
+        'indigenous_financial_institutions',
+      ]
+    >;
     faqContent: Schema.Attribute.Component<'lender.faq-item', true>;
-    how_to_apply: Schema.Attribute.RichText;
-    intake_status: Schema.Attribute.Enumeration<
-      ['open', 'closed', 'periodic']
-    > &
-      Schema.Attribute.DefaultTo<'open'>;
-    level: Schema.Attribute.Enumeration<['federal', 'provincial']> &
-      Schema.Attribute.Required;
+    guarantee_note: Schema.Attribute.Text;
+    industries: Schema.Attribute.JSON;
+    intake_note: Schema.Attribute.Text;
+    intake_status: Schema.Attribute.String;
+    last_verified: Schema.Attribute.Date;
+    level: Schema.Attribute.Enumeration<
+      ['federal', 'federal_regional', 'provincial']
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::government-program.government-program'
     > &
       Schema.Attribute.Private;
-    maximum_amount: Schema.Attribute.BigInteger;
     name: Schema.Attribute.String & Schema.Attribute.Required;
-    official_url: Schema.Attribute.String & Schema.Attribute.Required;
-    permitted_uses: Schema.Attribute.JSON & Schema.Attribute.Required;
-    provinces: Schema.Attribute.JSON;
+    notable: Schema.Attribute.Text;
+    one_liner: Schema.Attribute.Text;
+    page_url: Schema.Attribute.String;
+    province: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
-    requires_incorporation: Schema.Attribute.Boolean &
-      Schema.Attribute.DefaultTo<false>;
-    revenue_ceiling: Schema.Attribute.BigInteger;
-    ruled_out_copy: Schema.Attribute.Text;
+    repayable: Schema.Attribute.Boolean;
     seo: Schema.Attribute.Component<'shared.seo', false>;
+    short_name: Schema.Attribute.String;
     slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
-    tldr_answer: Schema.Attribute.Text & Schema.Attribute.Required;
-    typical_timeline: Schema.Attribute.String;
+    source_url: Schema.Attribute.String;
+    timeline_weeks: Schema.Attribute.String;
+    tldr_answer: Schema.Attribute.Text;
+    type: Schema.Attribute.Enumeration<
+      [
+        'grant',
+        'loan',
+        'loan_guarantee',
+        'tax_credit',
+        'wage_subsidy',
+        'training_grant',
+        'mixed',
+        'directory',
+      ]
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    use_of_funds: Schema.Attribute.JSON;
+    variants: Schema.Attribute.JSON;
+    verify_note: Schema.Attribute.Text;
   };
 }
 
@@ -1617,6 +1652,7 @@ export interface ApiReportReport extends Struct.CollectionTypeSchema {
     executive_quote: Schema.Attribute.Text;
     faqContent: Schema.Attribute.Component<'lender.faq-item', true>;
     hero_figure: Schema.Attribute.Media<'images'>;
+    hub_figure: Schema.Attribute.Media<'images'>;
     key_findings: Schema.Attribute.Component<'report.key-finding', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<

@@ -5,7 +5,7 @@
     "singularName": "government-program",
     "pluralName": "government-programs",
     "displayName": "Government Program",
-    "description": "Structured program records feeding the hub, matcher, category blocks and city pages (Section 10)"
+    "description": "Government financing cluster: 30 program records feeding the hub, checker, program and browse pages (government financing package, Aug 2026)"
   },
   "options": {
     "draftAndPublish": true
@@ -20,72 +20,134 @@
       "targetField": "name",
       "required": true
     },
+    "short_name": {
+      "type": "string",
+      "description": "e.g. CSBFP"
+    },
+    "administered_by": {
+      "type": "string"
+    },
+    "entity_type": {
+      "type": "enumeration",
+      "enum": [
+        "federal_government",
+        "federal_government_via_partners",
+        "provincial_government",
+        "provincial_agency",
+        "crown_corporation",
+        "provincial_crown_corporation",
+        "non_profit",
+        "industry_non_profit",
+        "indigenous_financial_institutions"
+      ],
+      "description": "Every program shows who runs it; non-government entities say so in the intro"
+    },
+    "entity_label": {
+      "type": "string",
+      "description": "Display label for the running entity"
+    },
     "level": {
       "type": "enumeration",
       "enum": [
         "federal",
+        "federal_regional",
         "provincial"
-      ],
-      "required": true
+      ]
     },
-    "maximum_amount": {
-      "type": "biginteger"
-    },
-    "permitted_uses": {
-      "type": "json",
-      "required": true,
-      "description": "Array from: equipment, leaseholds, working_capital, hiring, property, other"
-    },
-    "applied_through": {
+    "province": {
       "type": "string",
-      "required": true,
-      "description": "e.g. 'Your bank', 'BDC directly', 'Province of Ontario'"
+      "description": "Two-letter code for provincial programs"
     },
-    "official_url": {
-      "type": "string",
-      "required": true,
-      "description": "Cards link to the official government route - no commercial links (Section 10)"
-    },
-    "typical_timeline": {
-      "type": "string",
-      "description": "e.g. '4 - 6 weeks'"
-    },
-    "intake_status": {
+    "type": {
       "type": "enumeration",
       "enum": [
-        "open",
-        "closed",
-        "periodic"
+        "grant",
+        "loan",
+        "loan_guarantee",
+        "tax_credit",
+        "wage_subsidy",
+        "training_grant",
+        "mixed",
+        "directory"
       ],
-      "default": "open"
+      "description": "Grants rank above loans in the matcher regardless of amount"
     },
-    "eligible_stages": {
-      "type": "json",
-      "required": true,
-      "description": "Array from: pre_revenue, under_1_year, operating_1_3_years, 3_plus_years"
-    },
-    "revenue_ceiling": {
-      "type": "biginteger",
-      "description": "Max annual revenue to qualify; null = no ceiling"
-    },
-    "requires_incorporation": {
+    "repayable": {
       "type": "boolean",
-      "default": false
+      "description": "Null where the concept does not apply (tax credits)"
     },
-    "provinces": {
-      "type": "json",
-      "description": "Province codes; null/empty = all of Canada"
+    "one_liner": {
+      "type": "text"
     },
-    "how_to_apply": {
-      "type": "richtext"
-    },
-    "ruled_out_copy": {
+    "notable": {
       "type": "text",
-      "description": "Plain-language reason template when the matcher rules this program out"
+      "description": "The distinguishing fact that decides success with this program"
+    },
+    "amount_min": {
+      "type": "biginteger"
+    },
+    "amount_max": {
+      "type": "biginteger",
+      "description": "Only on confidence VERIFIED programs; unverified amounts never render"
+    },
+    "amount_structure": {
+      "type": "text"
+    },
+    "cost": {
+      "type": "text"
+    },
+    "guarantee_note": {
+      "type": "text"
+    },
+    "eligibility": {
+      "type": "json",
+      "description": "Matcher criteria: revenue_max, years_operating_min/max, startups_eligible, sectors_excluded, provinces, incorporation_required, other"
+    },
+    "use_of_funds": {
+      "type": "json"
+    },
+    "industries": {
+      "type": "json"
+    },
+    "variants": {
+      "type": "json"
+    },
+    "apply_through": {
+      "type": "text"
+    },
+    "timeline_weeks": {
+      "type": "string",
+      "description": "e.g. '4 to 8'; ranking uses the lower bound"
+    },
+    "intake_status": {
+      "type": "string",
+      "description": "continuous / seasonal / varies* / VERIFY. VERIFY intake holds the program out of checker results"
+    },
+    "intake_note": {
+      "type": "text"
+    },
+    "source_url": {
+      "type": "string",
+      "description": "Primary source only (canada.ca, bdc.ca, provincial sites)"
+    },
+    "confidence": {
+      "type": "string",
+      "description": "VERIFIED-PRIMARY / VERIFIED-MULTI / VERIFY - render gate for amounts"
+    },
+    "last_verified": {
+      "type": "date",
+      "description": "Static stamp of an actual check, never auto-dated"
+    },
+    "verify_note": {
+      "type": "text",
+      "description": "Exactly what needs confirming"
+    },
+    "page_url": {
+      "type": "string",
+      "description": "Directory entries that resolve to another program page"
     },
     "tldr_answer": {
-      "type": "text",
-      "required": true
+      "type": "text"
     },
     "faqContent": {
       "type": "component",
@@ -98,8 +160,7 @@
       "repeatable": false
     },
     "action_log_refs": {
-      "type": "json",
-      "description": "References into the action log (Section 24)"
+      "type": "json"
     }
   }
 }
