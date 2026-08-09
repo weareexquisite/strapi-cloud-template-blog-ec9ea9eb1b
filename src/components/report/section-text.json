@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_report_section_texts",
+  "info": {
+    "displayName": "Section text",
+    "description": "Section titles are findings, not labels"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "body": {
+      "type": "richtext"
+    }
+  }
+}

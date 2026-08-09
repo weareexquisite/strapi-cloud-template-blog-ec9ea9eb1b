@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_report_pull_quotes",
+  "info": {
+    "displayName": "Pull quote"
+  },
+  "options": {},
+  "attributes": {
+    "quote": {
+      "type": "text",
+      "required": true
+    },
+    "attribution": {
+      "type": "string"
+    }
+  }
+}

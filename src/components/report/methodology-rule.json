@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_report_methodology_rules",
+  "info": {
+    "displayName": "Methodology rule"
+  },
+  "options": {},
+  "attributes": {
+    "rule": {
+      "type": "string",
+      "required": true
+    },
+    "detail": {
+      "type": "text"
+    }
+  }
+}

@@ -17,6 +17,12 @@
     },
     "canonicalURL": {
       "type": "string"
+    },
+    "og_title": {
+      "type": "string"
+    },
+    "og_description": {
+      "type": "text"
     }
   }
 }

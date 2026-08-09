@@ -5,7 +5,7 @@
     "singularName": "report",
     "pluralName": "reports",
     "displayName": "Report",
-    "description": "Smarter Loans Research editions (Sections 9, 23)"
+    "description": "Smarter Loans Research editions (research hub package, Aug 2026)"
   },
   "options": {
     "draftAndPublish": true
@@ -42,10 +42,63 @@
       ],
       "required": true
     },
-    "period": {
+    "subtitle": {
+      "type": "text",
+      "description": "The finding, red display treatment"
+    },
+    "edition_label": {
       "type": "string",
-      "required": true,
-      "description": "e.g. 'Q2 2026'"
+      "description": "e.g. Inaugural Edition"
+    },
+    "period_label": {
+      "type": "string",
+      "description": "e.g. First Half 2026"
+    },
+    "publication_date": {
+      "type": "date",
+      "description": "Set at publish time by Vlad"
+    },
+    "dek": {
+      "type": "text"
+    },
+    "executive_quote": {
+      "type": "text"
+    },
+    "quote_attribution": {
+      "type": "string"
+    },
+    "hero_figure": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ],
+      "description": "Hero band figure, doubles as the OG image (1600x900 minimum)"
+    },
+    "sections": {
+      "type": "dynamiczone",
+      "components": [
+        "report.section-text",
+        "report.figure-with-table",
+        "report.pull-quote",
+        "report.data-table"
+      ]
+    },
+    "author": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::author.author"
+    },
+    "reviewed_date": {
+      "type": "date"
+    },
+    "next_release_label": {
+      "type": "string",
+      "description": "e.g. Q3 2026 Edition"
+    },
+    "next_release_month": {
+      "type": "string",
+      "description": "e.g. October 2026"
     },
     "data_period_start": {
       "type": "date"
@@ -53,18 +106,9 @@
     "data_period_end": {
       "type": "date"
     },
-    "headline_finding": {
-      "type": "text",
-      "required": true
-    },
     "key_findings": {
       "type": "component",
       "component": "report.key-finding",
-      "repeatable": true
-    },
-    "charts": {
-      "type": "component",
-      "component": "report.chart",
       "repeatable": true
     },
     "methodology": {
@@ -81,7 +125,8 @@
     },
     "tldr_answer": {
       "type": "text",
-      "required": true
+      "required": true,
+      "description": "Quick answer: renders in the IN SHORT block, above the first H2 (the answer target)"
     },
     "faqContent": {
       "type": "component",

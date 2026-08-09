@@ -3,14 +3,18 @@
   "info": {
     "displayName": "Key finding"
   },
+  "options": {},
   "attributes": {
-    "finding": {
-      "type": "text",
-      "required": true
-    },
     "stat": {
       "type": "string",
-      "description": "The headline number, e.g. '+11%'"
+      "description": "The headline number, e.g. '+30.6%'"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "body": {
+      "type": "text"
     }
   }
 }

@@ -1,0 +1,38 @@
+{
+  "kind": "singleType",
+  "collectionName": "research_methodologies",
+  "info": {
+    "singularName": "research-methodology",
+    "pluralName": "research-methodologies",
+    "displayName": "Research Methodology",
+    "description": "Standing methodology page - cited externally, must be stable"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "last_updated": {
+      "type": "date"
+    },
+    "intro": {
+      "type": "richtext"
+    },
+    "rules": {
+      "type": "component",
+      "component": "report.methodology-rule",
+      "repeatable": true
+    },
+    "body": {
+      "type": "richtext"
+    },
+    "seo": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    }
+  }
+}

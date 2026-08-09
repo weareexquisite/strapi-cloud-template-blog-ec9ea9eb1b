@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_report_figures_with_tables",
+  "info": {
+    "displayName": "Figure with table",
+    "description": "A chart never ships without its data table - the table is the machine-readable version"
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ],
+      "required": true
+    },
+    "caption": {
+      "type": "string"
+    },
+    "table_headers": {
+      "type": "json",
+      "description": "Array of column labels"
+    },
+    "table_rows": {
+      "type": "json",
+      "description": "Array of row arrays"
+    },
+    "footnote": {
+      "type": "text"
+    }
+  }
+}

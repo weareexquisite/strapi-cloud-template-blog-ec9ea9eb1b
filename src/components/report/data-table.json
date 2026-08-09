@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_report_data_tables",
+  "info": {
+    "displayName": "Data table",
+    "description": "Standalone crawlable table (e.g. provincial index when charts are withheld)"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "table_headers": {
+      "type": "json"
+    },
+    "table_rows": {
+      "type": "json"
+    },
+    "footnote": {
+      "type": "text"
+    }
+  }
+}
