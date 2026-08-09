@@ -75,6 +75,14 @@
       ],
       "description": "Hero band figure, doubles as the OG image (1600x900 minimum)"
     },
+    "hub_figure": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ],
+      "description": "The edition's provincial demand index figure - the hub hero, refreshed each edition"
+    },
     "sections": {
       "type": "dynamiczone",
       "components": [
