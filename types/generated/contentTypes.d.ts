@@ -743,6 +743,7 @@ export interface ApiCompanyCompany extends Struct.CollectionTypeSchema {
     regulator_registration: Schema.Attribute.String;
     review_date: Schema.Attribute.Date;
     reviewed_by: Schema.Attribute.Relation<'manyToOne', 'api::author.author'>;
+    reviews: Schema.Attribute.Relation<'oneToMany', 'api::review.review'>;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'name'>;
     source_url: Schema.Attribute.String;

@@ -277,6 +277,12 @@
     "analyst": {
       "type": "string",
       "description": "Named reviewer, as on lender profiles"
+    },
+    "reviews": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::review.review",
+      "mappedBy": "company"
     }
   }
 }

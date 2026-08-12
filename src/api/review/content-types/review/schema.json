@@ -63,7 +63,8 @@
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::company.company",
-      "description": "A review belongs to exactly one of lender or company"
+      "description": "A review belongs to exactly one of lender or company",
+      "inversedBy": "reviews"
     },
     "subject_type": {
       "type": "enumeration",
