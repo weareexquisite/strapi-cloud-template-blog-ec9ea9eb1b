@@ -197,11 +197,11 @@
       ],
       "description": "Drives derived income (network rules, not issuer pages). Every derived cell footnotes the network"
     },
-    "annual_fee": {
+    "annual_fee_dollars": {
       "type": "integer",
       "description": "Dollars, ongoing rate"
     },
-    "annual_fee_year_1": {
+    "annual_fee_year_1_dollars": {
       "type": "integer",
       "description": "Null when no first-year waiver"
     },
