@@ -221,7 +221,7 @@
     "parent_company": {
       "type": "string"
     },
-    "status": {
+    "operating_status": {
       "type": "enumeration",
       "enum": [
         "active",
