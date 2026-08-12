@@ -578,7 +578,7 @@ export interface ApiCompanyProductCompanyProduct
   extends Struct.CollectionTypeSchema {
   collectionName: 'company_products';
   info: {
-    description: 'Company/banking product record mirroring the lender structure (Appendix B)';
+    description: 'Company Data Standard product record - one block per product, never blended (financial sphere package)';
     displayName: 'Company Product';
     pluralName: 'company-products';
     singularName: 'company-product';
@@ -590,19 +590,23 @@ export interface ApiCompanyProductCompanyProduct
     amount_max: Schema.Attribute.BigInteger;
     amount_min: Schema.Attribute.BigInteger;
     company: Schema.Attribute.Relation<'manyToOne', 'api::company.company'>;
+    confidence: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     fees: Schema.Attribute.RichText;
     good_to_know: Schema.Attribute.Text;
-    insurance_type: Schema.Attribute.String;
+    headline_rate: Schema.Attribute.String;
+    insurance_protection: Schema.Attribute.String;
     interest_rate: Schema.Attribute.Decimal;
+    last_verified: Schema.Attribute.Date;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::company-product.company-product'
     > &
       Schema.Attribute.Private;
+    minimums: Schema.Attribute.Text;
     monthly_fee: Schema.Attribute.Decimal;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     product_type: Schema.Attribute.Enumeration<
@@ -612,10 +616,17 @@ export interface ApiCompanyProductCompanyProduct
         'hybrid_account',
         'gic',
         'prepaid_card',
+        'credit_builder',
         'debt_management_plan',
         'debt_restructuring',
         'consumer_proposal_admin',
         'insurance',
+        'money_transfer',
+        'business_account',
+        'payment_processing',
+        'accounting_software',
+        'incorporation_service',
+        'payroll_service',
         'other',
       ]
     > &
@@ -624,9 +635,12 @@ export interface ApiCompanyProductCompanyProduct
       'product.province-override',
       true
     >;
+    provinces_served: Schema.Attribute.JSON;
     publishedAt: Schema.Attribute.DateTime;
+    rate_basis: Schema.Attribute.String;
     rates_last_reviewed: Schema.Attribute.Date;
     referral_url: Schema.Attribute.String;
+    source_url: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -649,12 +663,14 @@ export interface ApiCompanyCompany extends Struct.CollectionTypeSchema {
     addFaqToThePage: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<false>;
     amount: Schema.Attribute.String;
+    analyst: Schema.Attribute.String;
     availability: Schema.Attribute.String;
     best_for: Schema.Attribute.Text;
     buttonLink: Schema.Attribute.String;
     buttonText: Schema.Attribute.String;
     callCenterTiming: Schema.Attribute.String;
     canadianStates: Schema.Attribute.JSON;
+    categories: Schema.Attribute.JSON;
     cities: Schema.Attribute.JSON;
     company_type: Schema.Attribute.Enumeration<
       [
@@ -671,6 +687,7 @@ export interface ApiCompanyCompany extends Struct.CollectionTypeSchema {
       'manyToMany',
       'api::category.category'
     >;
+    confidence: Schema.Attribute.String;
     cons: Schema.Attribute.JSON;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -681,11 +698,16 @@ export interface ApiCompanyCompany extends Struct.CollectionTypeSchema {
     email: Schema.Attribute.Email;
     facebook: Schema.Attribute.String;
     faqContent: Schema.Attribute.Component<'lender.faq-item', true>;
+    former_names: Schema.Attribute.JSON;
+    founded: Schema.Attribute.String;
     hoAddress: Schema.Attribute.Text;
     howLongInBusiness: Schema.Attribute.String;
     howManyBranches: Schema.Attribute.String;
+    hq_province: Schema.Attribute.String;
     instagram: Schema.Attribute.String;
     introVideo: Schema.Attribute.Text;
+    last_verified: Schema.Attribute.Date;
+    legal_name: Schema.Attribute.String;
     linkedIn: Schema.Attribute.String;
     linkTarget: Schema.Attribute.String;
     loanOffered: Schema.Attribute.Component<'company.loan-offered', true>;
@@ -700,6 +722,8 @@ export interface ApiCompanyCompany extends Struct.CollectionTypeSchema {
     name: Schema.Attribute.String & Schema.Attribute.Required;
     not_for: Schema.Attribute.Text;
     numberOfCustomers: Schema.Attribute.String;
+    one_liner: Schema.Attribute.Text;
+    parent_company: Schema.Attribute.String;
     phone: Schema.Attribute.String;
     phone2: Schema.Attribute.String;
     physicalLocations: Schema.Attribute.Text;
@@ -716,17 +740,26 @@ export interface ApiCompanyCompany extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     rates_last_reviewed: Schema.Attribute.Date;
     referral_url: Schema.Attribute.String;
+    regulator_registration: Schema.Attribute.String;
     review_date: Schema.Attribute.Date;
     reviewed_by: Schema.Attribute.Relation<'manyToOne', 'api::author.author'>;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'name'>;
+    source_url: Schema.Attribute.String;
+    sphere: Schema.Attribute.Enumeration<['consumer', 'business']>;
+    stage: Schema.Attribute.String;
+    status: Schema.Attribute.Enumeration<
+      ['active', 'acquired', 'pivoted', 'wound_down']
+    >;
     supportOffer: Schema.Attribute.Component<'lender.support-offer', true>;
     tldr_answer: Schema.Attribute.Text;
     totalFunded: Schema.Attribute.String;
+    trading_name: Schema.Attribute.String;
     twitter: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    verification_notes: Schema.Attribute.Text;
     videos: Schema.Attribute.Component<'lender.video', true>;
     website: Schema.Attribute.String;
     wp_id: Schema.Attribute.Integer &
@@ -1747,6 +1780,7 @@ export interface ApiReviewReview extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    company: Schema.Attribute.Relation<'manyToOne', 'api::company.company'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1760,17 +1794,25 @@ export interface ApiReviewReview extends Struct.CollectionTypeSchema {
       'api::review.review'
     > &
       Schema.Attribute.Private;
+    moderated_at: Schema.Attribute.DateTime;
+    moderated_by: Schema.Attribute.String;
     product_label: Schema.Attribute.String;
+    product_used: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     rating: Schema.Attribute.Decimal;
     review: Schema.Attribute.Text;
     review_date: Schema.Attribute.Date;
+    reviewer_region: Schema.Attribute.String;
     reviewerName: Schema.Attribute.String;
     reviewTitle: Schema.Attribute.String;
     seo: Schema.Attribute.Component<'shared.seo', false>;
+    subject_type: Schema.Attribute.Enumeration<['lender', 'company']>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    verification_method: Schema.Attribute.Enumeration<
+      ['crm_match', 'referral_click', 'solicited_survey', 'unverified']
+    >;
     verified_borrower: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<false>;
     wp_id: Schema.Attribute.Integer &

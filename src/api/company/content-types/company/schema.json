@@ -206,6 +206,77 @@
     },
     "action_log_refs": {
       "type": "json"
+    },
+    "legal_name": {
+      "type": "string",
+      "description": "Current registered entity - rebrands and acquisitions change this"
+    },
+    "trading_name": {
+      "type": "string"
+    },
+    "former_names": {
+      "type": "json",
+      "description": "Rebrands and prior identities so a stale search still resolves"
+    },
+    "parent_company": {
+      "type": "string"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "active",
+        "acquired",
+        "pivoted",
+        "wound_down"
+      ],
+      "description": "Non-active never renders as a live listing: it redirects or carries a dated note"
+    },
+    "founded": {
+      "type": "string"
+    },
+    "hq_province": {
+      "type": "string"
+    },
+    "regulator_registration": {
+      "type": "string",
+      "description": "OSFI / provincial insurance regulator / LIT number / securities registration"
+    },
+    "sphere": {
+      "type": "enumeration",
+      "enum": [
+        "consumer",
+        "business"
+      ]
+    },
+    "stage": {
+      "type": "string",
+      "description": "Which stage of the financial sphere this serves"
+    },
+    "categories": {
+      "type": "json",
+      "description": "Category page slugs this company appears on - membership derives from the record (fixes the DATA-09 gap)"
+    },
+    "one_liner": {
+      "type": "text"
+    },
+    "source_url": {
+      "type": "string",
+      "description": "The company's own page, never an aggregator"
+    },
+    "last_verified": {
+      "type": "date",
+      "description": "Static stamp of an actual check, never auto-dated"
+    },
+    "confidence": {
+      "type": "string",
+      "description": "VERIFIED-PRIMARY / VERIFIED-MULTI / VERIFY - render gate"
+    },
+    "verification_notes": {
+      "type": "text"
+    },
+    "analyst": {
+      "type": "string",
+      "description": "Named reviewer, as on lender profiles"
     }
   }
 }

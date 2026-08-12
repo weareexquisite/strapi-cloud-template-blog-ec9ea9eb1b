@@ -58,6 +58,44 @@
     "product_label": {
       "type": "string",
       "description": "Which product the review concerns, e.g. 'Term loan'"
+    },
+    "company": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::company.company",
+      "description": "A review belongs to exactly one of lender or company"
+    },
+    "subject_type": {
+      "type": "enumeration",
+      "enum": [
+        "lender",
+        "company"
+      ],
+      "description": "Prevents a review attaching to both"
+    },
+    "verification_method": {
+      "type": "enumeration",
+      "enum": [
+        "crm_match",
+        "referral_click",
+        "solicited_survey",
+        "unverified"
+      ]
+    },
+    "product_used": {
+      "type": "string",
+      "description": "Which product the reviewer actually used"
+    },
+    "moderated_at": {
+      "type": "datetime",
+      "description": "Every review passes a human before publishing"
+    },
+    "moderated_by": {
+      "type": "string"
+    },
+    "reviewer_region": {
+      "type": "string",
+      "description": "Province only. No city, no identifying detail."
     }
   }
 }

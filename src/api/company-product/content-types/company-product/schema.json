@@ -5,7 +5,7 @@
     "singularName": "company-product",
     "pluralName": "company-products",
     "displayName": "Company Product",
-    "description": "Company/banking product record mirroring the lender structure (Appendix B)"
+    "description": "Company Data Standard product record - one block per product, never blended (financial sphere package)"
   },
   "options": {
     "draftAndPublish": true
@@ -29,10 +29,17 @@
         "hybrid_account",
         "gic",
         "prepaid_card",
+        "credit_builder",
         "debt_management_plan",
         "debt_restructuring",
         "consumer_proposal_admin",
         "insurance",
+        "money_transfer",
+        "business_account",
+        "payment_processing",
+        "accounting_software",
+        "incorporation_service",
+        "payroll_service",
         "other"
       ],
       "required": true
@@ -43,10 +50,6 @@
     },
     "monthly_fee": {
       "type": "decimal"
-    },
-    "insurance_type": {
-      "type": "string",
-      "description": "e.g. CDIC"
     },
     "amount_min": {
       "type": "biginteger"
@@ -72,6 +75,36 @@
     "rates_last_reviewed": {
       "type": "date",
       "required": false
+    },
+    "headline_rate": {
+      "type": "string",
+      "description": "Interest rate, cash back, or premium basis depending on category"
+    },
+    "rate_basis": {
+      "type": "string",
+      "description": "What the number actually is: savings vs promotional vs tiered are different claims"
+    },
+    "minimums": {
+      "type": "text",
+      "description": "Balance, deposit, income, coverage"
+    },
+    "provinces_served": {
+      "type": "json",
+      "description": "Insurance and credit unions are frequently provincial"
+    },
+    "insurance_protection": {
+      "type": "string",
+      "description": "CDIC, provincial deposit insurance, Assuris, or none. Never assume."
+    },
+    "source_url": {
+      "type": "string"
+    },
+    "last_verified": {
+      "type": "date"
+    },
+    "confidence": {
+      "type": "string",
+      "description": "VERIFY never renders"
     }
   }
 }
