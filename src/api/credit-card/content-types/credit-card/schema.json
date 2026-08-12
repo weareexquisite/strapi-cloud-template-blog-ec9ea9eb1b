@@ -170,6 +170,176 @@
     },
     "action_log_refs": {
       "type": "json"
+    },
+    "tier": {
+      "type": "enumeration",
+      "enum": [
+        "access",
+        "standard",
+        "editorial"
+      ],
+      "description": "Drives the template variant. editorial renders View card, never Apply, with the standing no-relationship line"
+    },
+    "network_tier": {
+      "type": "enumeration",
+      "enum": [
+        "visa_classic",
+        "visa_gold",
+        "visa_platinum",
+        "visa_infinite",
+        "visa_infinite_privilege",
+        "mastercard_standard",
+        "mastercard_world",
+        "mastercard_world_elite",
+        "amex_proprietary",
+        "amex_scotiabank_issued",
+        "not_a_credit_card"
+      ],
+      "description": "Drives derived income (network rules, not issuer pages). Every derived cell footnotes the network"
+    },
+    "annual_fee": {
+      "type": "integer",
+      "description": "Dollars, ongoing rate"
+    },
+    "annual_fee_year_1": {
+      "type": "integer",
+      "description": "Null when no first-year waiver"
+    },
+    "fee_status": {
+      "type": "enumeration",
+      "enum": [
+        "verified",
+        "derived",
+        "conflict",
+        "to_collect"
+      ]
+    },
+    "purchase_apr_min": {
+      "type": "decimal"
+    },
+    "purchase_apr_max": {
+      "type": "decimal",
+      "description": "Carry cost computes from MAX (ruling 3): credit-assessed pricing lands our audience at the ceiling"
+    },
+    "apr_status": {
+      "type": "enumeration",
+      "enum": [
+        "verified",
+        "derived",
+        "conflict",
+        "to_collect"
+      ]
+    },
+    "cash_advance_apr_dec": {
+      "type": "decimal",
+      "description": "Null for charge cards"
+    },
+    "balance_transfer_apr_dec": {
+      "type": "decimal",
+      "description": "Null when no promo"
+    },
+    "rate_type": {
+      "type": "enumeration",
+      "enum": [
+        "apr",
+        "charge_card",
+        "not_published"
+      ]
+    },
+    "min_income_annual": {
+      "type": "integer",
+      "description": "Null when none published (passes every income test)"
+    },
+    "min_income_household": {
+      "type": "integer",
+      "description": "DISCLOSURE ONLY - never matched; we ask individual income only"
+    },
+    "income_status": {
+      "type": "enumeration",
+      "enum": [
+        "verified",
+        "derived",
+        "conflict",
+        "to_collect"
+      ]
+    },
+    "min_credit_band": {
+      "type": "enumeration",
+      "enum": [
+        "any",
+        "rebuilding",
+        "fair",
+        "good",
+        "excellent",
+        "not_published"
+      ],
+      "description": "The vertical axis of the two-axis eligibility model - the only criterion that changes through effort"
+    },
+    "credit_check": {
+      "type": "enumeration",
+      "enum": [
+        "none",
+        "soft",
+        "hard",
+        "not_published"
+      ]
+    },
+    "bureaus_reported": {
+      "type": "enumeration",
+      "enum": [
+        "both",
+        "equifax",
+        "transunion",
+        "none",
+        "not_published"
+      ]
+    },
+    "provinces": {
+      "type": "json",
+      "description": "Array of two-letter codes; 'ALL' expands at ingest"
+    },
+    "fx_fee_pct": {
+      "type": "decimal",
+      "description": "0 qualifies for the no-FX facet - zero is data, not absence"
+    },
+    "rewards_summary": {
+      "type": "text",
+      "description": "One line, or the word None"
+    },
+    "referral_network": {
+      "type": "string",
+      "description": "Null when tier = editorial"
+    },
+    "facets": {
+      "type": "json",
+      "description": "Facet slugs; memberships recompute from the section-10 predicates at ingest"
+    },
+    "best_for": {
+      "type": "text",
+      "description": "Authored, one line (replaces the killed 9.0/10 score as the leading judgement)"
+    },
+    "verdict_not_for": {
+      "type": "text"
+    },
+    "verdict_like": {
+      "type": "json",
+      "description": "3 to 4 authored items"
+    },
+    "verdict_improve": {
+      "type": "json",
+      "description": "3 to 4 authored items"
+    },
+    "rates_checked_date": {
+      "type": "date",
+      "description": "Static stamp of an actual check"
+    },
+    "change_log": {
+      "type": "json",
+      "description": "Change ledger entries: date, field, from, to, note"
+    },
+    "data_notes": {
+      "type": "text",
+      "description": "Collection notes (e.g. QC-only hard check)"
     }
   }
 }

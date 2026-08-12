@@ -783,9 +783,19 @@ export interface ApiCreditCardCreditCard extends Struct.CollectionTypeSchema {
   };
   attributes: {
     action_log_refs: Schema.Attribute.JSON;
+    annual_fee: Schema.Attribute.Integer;
     annual_fee_amount: Schema.Attribute.Decimal;
+    annual_fee_year_1: Schema.Attribute.Integer;
     annualFee: Schema.Attribute.String;
+    apr_status: Schema.Attribute.Enumeration<
+      ['verified', 'derived', 'conflict', 'to_collect']
+    >;
+    balance_transfer_apr_dec: Schema.Attribute.Decimal;
     balanceTransferApr: Schema.Attribute.String;
+    best_for: Schema.Attribute.Text;
+    bureaus_reported: Schema.Attribute.Enumeration<
+      ['both', 'equifax', 'transunion', 'none', 'not_published']
+    >;
     card_type: Schema.Attribute.Enumeration<
       [
         'cash_back',
@@ -812,14 +822,19 @@ export interface ApiCreditCardCreditCard extends Struct.CollectionTypeSchema {
       'manyToMany',
       'api::category.category'
     >;
+    cash_advance_apr_dec: Schema.Attribute.Decimal;
     cash_advance_apr_value: Schema.Attribute.Decimal;
     cashAdvanceApr: Schema.Attribute.String;
+    change_log: Schema.Attribute.JSON;
     checked_date: Schema.Attribute.Date;
     compliance_copy: Schema.Attribute.Text;
     cons: Schema.Attribute.RichText;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    credit_check: Schema.Attribute.Enumeration<
+      ['none', 'soft', 'hard', 'not_published']
+    >;
     credit_needed: Schema.Attribute.Enumeration<
       ['any', 'poor', 'fair', 'good', 'excellent']
     >;
@@ -829,6 +844,15 @@ export interface ApiCreditCardCreditCard extends Struct.CollectionTypeSchema {
     >;
     ctaUrl: Schema.Attribute.String;
     currencyConversionFee: Schema.Attribute.String;
+    data_notes: Schema.Attribute.Text;
+    facets: Schema.Attribute.JSON;
+    fee_status: Schema.Attribute.Enumeration<
+      ['verified', 'derived', 'conflict', 'to_collect']
+    >;
+    fx_fee_pct: Schema.Attribute.Decimal;
+    income_status: Schema.Attribute.Enumeration<
+      ['verified', 'derived', 'conflict', 'to_collect']
+    >;
     issuerLogo: Schema.Attribute.Media<'images'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -836,9 +860,29 @@ export interface ApiCreditCardCreditCard extends Struct.CollectionTypeSchema {
       'api::credit-card.credit-card'
     > &
       Schema.Attribute.Private;
+    min_credit_band: Schema.Attribute.Enumeration<
+      ['any', 'rebuilding', 'fair', 'good', 'excellent', 'not_published']
+    >;
     min_deposit: Schema.Attribute.Decimal;
+    min_income_annual: Schema.Attribute.Integer;
+    min_income_household: Schema.Attribute.Integer;
     minimumCreditScore: Schema.Attribute.String;
     minimumDepositToOpen: Schema.Attribute.String;
+    network_tier: Schema.Attribute.Enumeration<
+      [
+        'visa_classic',
+        'visa_gold',
+        'visa_platinum',
+        'visa_infinite',
+        'visa_infinite_privilege',
+        'mastercard_standard',
+        'mastercard_world',
+        'mastercard_world_elite',
+        'amex_proprietary',
+        'amex_scotiabank_issued',
+        'not_a_credit_card',
+      ]
+    >;
     ourRating: Schema.Attribute.Decimal;
     ourVerdict: Schema.Attribute.Text;
     primaryCreditCardCategory: Schema.Attribute.Relation<
@@ -850,18 +894,31 @@ export interface ApiCreditCardCreditCard extends Struct.CollectionTypeSchema {
       'product.province-override',
       true
     >;
+    provinces: Schema.Attribute.JSON;
     publishedAt: Schema.Attribute.DateTime;
+    purchase_apr_max: Schema.Attribute.Decimal;
+    purchase_apr_min: Schema.Attribute.Decimal;
     purchase_apr_value: Schema.Attribute.Decimal;
     purchaseApr: Schema.Attribute.String;
+    rate_type: Schema.Attribute.Enumeration<
+      ['apr', 'charge_card', 'not_published']
+    >;
+    rates_checked_date: Schema.Attribute.Date;
+    referral_network: Schema.Attribute.String;
     referral_url: Schema.Attribute.String;
     requirements: Schema.Attribute.Text;
     rewards: Schema.Attribute.Text;
+    rewards_summary: Schema.Attribute.Text;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'cardName'>;
+    tier: Schema.Attribute.Enumeration<['access', 'standard', 'editorial']>;
     tldr_answer: Schema.Attribute.Text;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    verdict_improve: Schema.Attribute.JSON;
+    verdict_like: Schema.Attribute.JSON;
+    verdict_not_for: Schema.Attribute.Text;
     welcomeOffer: Schema.Attribute.Text;
     wp_id: Schema.Attribute.Integer &
       Schema.Attribute.Required &
