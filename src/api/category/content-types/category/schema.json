@@ -13,7 +13,7 @@
   "attributes": {
     "wp_id": {
       "type": "integer",
-      "required": true,
+      "required": false,
       "unique": true
     },
     "name": {

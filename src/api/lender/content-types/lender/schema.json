@@ -256,6 +256,9 @@
     "preferred_lender_id": {
       "type": "integer",
       "description": "CRM lenders-table id for apply routing (apply-url handoff, Aug 2026). Nullable by design: null means no confident CRM match - the URL helper omits the parameter entirely, never guesses."
+    },
+    "listed_since": {
+      "type": "date"
     }
   }
 }

@@ -340,6 +340,12 @@
     "data_notes": {
       "type": "text",
       "description": "Collection notes (e.g. QC-only hard check)"
+    },
+    "cash_advance_apr_quebec": {
+      "type": "decimal"
+    },
+    "balance_transfer_apr_quebec": {
+      "type": "decimal"
     }
   }
 }
