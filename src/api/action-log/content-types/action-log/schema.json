@@ -1,0 +1,112 @@
+{
+  "kind": "collectionType",
+  "collectionName": "action_logs",
+  "info": {
+    "singularName": "action-log",
+    "pluralName": "action-logs",
+    "displayName": "Action Log",
+    "description": "Every automated/growth-engine action: which page, what changed, when, why (Master Doc s24). Interventions per week by type; affected sets measured against controls."
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "action_type": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "metadata_rewrite",
+        "internal_link_add",
+        "internal_link_remove",
+        "content_refresh",
+        "content_consolidation",
+        "redirect_add",
+        "page_create",
+        "page_kill",
+        "schema_fix",
+        "technical_fix",
+        "rate_verification",
+        "manual_edit",
+        "other"
+      ]
+    },
+    "source": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "linking_engine",
+        "refresh_pipeline",
+        "striking_distance",
+        "metadata_batch",
+        "technical_watch",
+        "lifecycle_scoring",
+        "intelligence_layer",
+        "migration",
+        "manual"
+      ]
+    },
+    "action_status": {
+      "type": "enumeration",
+      "required": true,
+      "default": "proposed",
+      "enum": [
+        "proposed",
+        "applied",
+        "rejected",
+        "reverted"
+      ]
+    },
+    "target_url": {
+      "type": "string",
+      "required": true
+    },
+    "target_content_type": {
+      "type": "string",
+      "description": "Strapi UID, e.g. api::page.page"
+    },
+    "target_document_id": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "text",
+      "required": true,
+      "description": "What changed, one plain sentence"
+    },
+    "rationale": {
+      "type": "text",
+      "description": "Why - the signal that triggered this action"
+    },
+    "actor": {
+      "type": "string",
+      "required": true,
+      "description": "claude | human name (who approved/applied)"
+    },
+    "batch_id": {
+      "type": "string",
+      "description": "Groups actions applied together (one engine pass)"
+    },
+    "before": {
+      "type": "json",
+      "description": "Snapshot/diff before the change"
+    },
+    "after": {
+      "type": "json",
+      "description": "Snapshot/diff after the change"
+    },
+    "applied_at": {
+      "type": "datetime"
+    },
+    "measure_from": {
+      "type": "date",
+      "description": "Start of the measurement window"
+    },
+    "affected_urls": {
+      "type": "json",
+      "description": "URLs whose movement this action should influence"
+    },
+    "control_urls": {
+      "type": "json",
+      "description": "Untouched comparison set for the same window"
+    }
+  }
+}
