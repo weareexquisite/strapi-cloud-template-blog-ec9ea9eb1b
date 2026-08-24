@@ -63,6 +63,12 @@
     },
     "review_date": {
       "type": "date"
+    },
+    "lenders": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::lender.lender",
+      "inversedBy": "earned_badges"
     }
   }
 }
