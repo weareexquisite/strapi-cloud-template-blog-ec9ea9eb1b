@@ -133,6 +133,9 @@
     "reviewed_date": {
       "type": "date",
       "description": "Renders 'Reviewed {date}' only when a reviewer is set"
+    },
+    "editorial_body": {
+      "type": "richtext"
     }
   }
 }
