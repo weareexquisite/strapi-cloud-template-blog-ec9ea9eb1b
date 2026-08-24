@@ -62,6 +62,9 @@
     },
     "meta_description": {
       "type": "text"
+    },
+    "editorial_body": {
+      "type": "richtext"
     }
   }
 }
