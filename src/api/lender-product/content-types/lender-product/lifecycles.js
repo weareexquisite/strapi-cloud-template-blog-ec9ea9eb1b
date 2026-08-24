@@ -29,10 +29,18 @@ const PERSONAL = ['min_income_monthly', 'min_credit_band'];
 // credit band, not published income minimums - the Data Standard records
 // income as N/A for these (workbook ruling, Aug 2026).
 const ASSET_SECURED = ['mortgage', 'home_equity_loan', 'auto_loan'];
+// Payday (task pack verification, Aug 2026): provincially fee-capped, no
+// credit check as a rule, income verified at application - lenders publish
+// fee, maximum and provinces but not income minimums, credit bands, or
+// (often) a loan minimum. Requiring those forces guessed data into rows
+// that are honestly complete for how the product is actually quoted.
+const PAYDAY = 'payday_loan';
 
 function missingFields(record) {
   const missing = [];
+  const isPayday = record.product_type === PAYDAY;
   for (const f of COMMON) {
+    if (isPayday && f === 'amount_min') continue;
     if (record[f] === null || record[f] === undefined || record[f] === '') missing.push(f);
   }
   const provinces = record.provinces_served;
@@ -46,9 +54,10 @@ function missingFields(record) {
     const assetSecured = ASSET_SECURED.includes(record.product_type);
     for (const f of PERSONAL) {
       if (assetSecured && f === 'min_income_monthly') continue;
+      if (isPayday) continue;
       if (record[f] === null || record[f] === undefined || record[f] === '') missing.push(f);
     }
-    if (!assetSecured) {
+    if (!assetSecured && !isPayday) {
       const types = record.income_types_accepted;
       if (!Array.isArray(types) || types.length === 0) missing.push('income_types_accepted');
     }
