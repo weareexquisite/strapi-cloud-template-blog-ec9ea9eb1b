@@ -283,6 +283,9 @@
       "relation": "oneToMany",
       "target": "api::review.review",
       "mappedBy": "company"
+    },
+    "company_description": {
+      "type": "richtext"
     }
   }
 }

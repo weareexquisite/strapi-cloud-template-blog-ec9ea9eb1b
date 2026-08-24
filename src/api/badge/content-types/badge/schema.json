@@ -5,7 +5,7 @@
     "singularName": "badge",
     "pluralName": "badges",
     "displayName": "Badge",
-    "description": "Earned Badges programme (Section 17): Quality Lender, Customer Favourite, Enduring Excellence, Video Verified"
+    "description": "Earned badges: definitions, criteria (published on /badges/), artwork. Records per the 21 Aug task pack field list."
   },
   "options": {
     "draftAndPublish": true
@@ -20,39 +20,49 @@
       "targetField": "name",
       "required": true
     },
-    "medal": {
+    "definition": {
+      "type": "text",
+      "required": true
+    },
+    "criteria": {
+      "type": "text",
+      "required": true
+    },
+    "badge_type": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "standard",
+        "tenure",
+        "performance",
+        "editorial",
+        "integration"
+      ]
+    },
+    "artwork": {
       "type": "media",
       "multiple": false,
       "allowedTypes": [
         "images"
-      ],
-      "description": "Existing badge artwork"
+      ]
     },
-    "criteria_text": {
-      "type": "richtext",
-      "required": true,
-      "description": "Published criteria - badges are never sold (Section 17)"
+    "artwork_url": {
+      "type": "string"
+    },
+    "display_order": {
+      "type": "integer",
+      "required": true
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "tenure_years_required": {
+      "type": "integer"
     },
     "review_date": {
-      "type": "date",
-      "required": true,
-      "description": "Annual review; badges can be withdrawn"
-    },
-    "withdrawn": {
-      "type": "boolean",
-      "default": false
-    },
-    "lenders": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::lender.lender",
-      "inversedBy": "earned_badges"
-    },
-    "years_earned": {
-      "type": "component",
-      "component": "badge.year-earned",
-      "repeatable": true,
-      "description": "Global years the badge has been issued; per-lender years live on the lender relation via badge_awards JSON if needed"
+      "type": "date"
     }
   }
 }

@@ -346,6 +346,17 @@
     },
     "balance_transfer_apr_quebec": {
       "type": "decimal"
+    },
+    "monthly_fee_dollars": {
+      "type": "decimal"
+    },
+    "fee_currency": {
+      "type": "enumeration",
+      "enum": [
+        "cad",
+        "usd"
+      ],
+      "default": "cad"
     }
   }
 }
