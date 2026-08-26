@@ -271,6 +271,9 @@
     },
     "eligibility_subhead": {
       "type": "string"
+    },
+    "exclusions_title": {
+      "type": "string"
     }
   }
 }
