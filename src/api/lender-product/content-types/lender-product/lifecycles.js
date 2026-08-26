@@ -36,6 +36,15 @@ const ASSET_SECURED = ['mortgage', 'home_equity_loan', 'auto_loan'];
 // that are honestly complete for how the product is actually quoted.
 const PAYDAY = 'payday_loan';
 
+// Income-source vocabulary (Vlad, 25 Aug): the ambiguous 'benefits' is
+// retired - lenders draw the line INSIDE that group (SkyCap accepts
+// disability, refuses EI and social assistance), so it could never give a
+// correct answer. income_types_accepted is untyped JSON (Strapi has no
+// multi-select enum), so the whitelist is enforced here at write time,
+// same guarantee as the enum fields beside it.
+const INCOME_TYPES = ['full_time', 'part_time', 'self_employed', 'pension',
+  'disability', 'ei', 'social_assistance', 'child_benefit', 'any'];
+
 function missingFields(record) {
   const missing = [];
   const isPayday = record.product_type === PAYDAY;
@@ -70,6 +79,20 @@ function missingFields(record) {
 async function stampCompleteness(event) {
   const { data, where } = event.params;
   if (!data) return;
+
+  // Write-time vocabulary enforcement for income_types_accepted.
+  if ('income_types_accepted' in data && data.income_types_accepted !== null) {
+    const { ValidationError } = require('@strapi/utils').errors;
+    const v = data.income_types_accepted;
+    if (!Array.isArray(v)) {
+      throw new ValidationError('income_types_accepted must be an array of: ' + INCOME_TYPES.join(', '));
+    }
+    const bad = v.filter((t) => !INCOME_TYPES.includes(t));
+    if (bad.length) {
+      throw new ValidationError('income_types_accepted: unknown value(s) ' + bad.join(', ')
+        + '. Permitted: ' + INCOME_TYPES.join(', '));
+    }
+  }
 
   // Updates arrive partial: merge over the stored record so untouched
   // match-critical fields still count toward completeness.
