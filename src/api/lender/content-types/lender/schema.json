@@ -259,6 +259,18 @@
     },
     "listed_since": {
       "type": "date"
+    },
+    "eligibility_criteria": {
+      "type": "json"
+    },
+    "documents_required": {
+      "type": "json"
+    },
+    "exclusions": {
+      "type": "json"
+    },
+    "eligibility_subhead": {
+      "type": "string"
     }
   }
 }
