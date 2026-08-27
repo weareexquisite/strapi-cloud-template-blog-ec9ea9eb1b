@@ -108,7 +108,7 @@
     },
     "income_types_accepted": {
       "type": "json",
-      "description": "Array from: employment, self_employment, disability, pension, benefits, other"
+      "description": "Array from: full_time, part_time, self_employed, pension, disability, ei, social_assistance, child_benefit, any. Enforced at write time by the lifecycle validator (25 Aug 2026); unknown values 400."
     },
     "min_monthly_revenue": {
       "type": "integer"
