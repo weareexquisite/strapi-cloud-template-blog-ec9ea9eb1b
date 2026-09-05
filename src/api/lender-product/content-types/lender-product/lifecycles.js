@@ -28,7 +28,7 @@ const PERSONAL = ['min_income_monthly', 'min_credit_band'];
 // Asset-secured personal verticals: qualification runs on the asset and
 // credit band, not published income minimums - the Data Standard records
 // income as N/A for these (workbook ruling, Aug 2026).
-const ASSET_SECURED = ['mortgage', 'home_equity_loan', 'auto_loan'];
+const ASSET_SECURED = ['mortgage', 'reverse_mortgage', 'home_equity_loan', 'auto_loan'];
 // Payday (task pack verification, Aug 2026): provincially fee-capped, no
 // credit check as a rule, income verified at application - lenders publish
 // fee, maximum and provinces but not income minimums, credit bands, or

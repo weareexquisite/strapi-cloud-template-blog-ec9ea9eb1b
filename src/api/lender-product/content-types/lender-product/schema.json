@@ -35,6 +35,7 @@
         "secured_personal_loan",
         "home_equity_loan",
         "mortgage",
+        "reverse_mortgage",
         "auto_loan",
         "truck_loan",
         "payday_loan",
