@@ -5,7 +5,7 @@
     "singularName": "post",
     "pluralName": "posts",
     "displayName": "Post",
-    "description": "Blog posts migrated from WP \"post\" type (flat blog \u2014 no categories/tags)"
+    "description": "Blog posts migrated from WP \"post\" type (flat blog — no categories/tags)"
   },
   "options": {
     "draftAndPublish": true
@@ -71,6 +71,22 @@
     "reviewed_date": {
       "type": "date",
       "description": "Renders 'Reviewed {date}' only when a reviewer is set"
+    },
+    "headline_figure": {
+      "type": "string",
+      "maxLength": 40,
+      "required": false,
+      "description": "Large stat shown on research-hub cards (package 2 item 8), e.g. \"$6,659\""
+    },
+    "content_type": {
+      "type": "string",
+      "required": false,
+      "description": "Editorial type driving the research-hub grids: data_story | research | guide. Absent from the original brief but its grids query it; plain string, team-populated."
+    },
+    "cluster": {
+      "type": "string",
+      "required": false,
+      "description": "Topic cluster; the research hub separates cluster=provincial data stories into their own grid."
     }
   }
 }
