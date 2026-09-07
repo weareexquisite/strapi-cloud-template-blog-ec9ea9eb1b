@@ -38,6 +38,11 @@
         "reverse_mortgage",
         "auto_loan",
         "truck_loan",
+        "aviation_loan",
+        "auto_refinance",
+        "recreational_vehicle_loan",
+        "credit_builder_loan",
+        "car_title_loan",
         "payday_loan",
         "other"
       ],
