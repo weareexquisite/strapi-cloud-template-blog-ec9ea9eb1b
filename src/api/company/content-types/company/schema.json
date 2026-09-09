@@ -286,6 +286,15 @@
     },
     "company_description": {
       "type": "richtext"
+    },
+    "gallery": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ],
+      "description": "Team, office and branch photography (MED-02). The profile gallery renders only when images exist; alt text comes from each image's alternativeText."
     }
   }
 }
