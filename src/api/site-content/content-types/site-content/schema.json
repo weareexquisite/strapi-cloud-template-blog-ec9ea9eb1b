@@ -1,0 +1,25 @@
+{
+  "kind": "singleType",
+  "collectionName": "site_content",
+  "info": {
+    "singularName": "site-content",
+    "pluralName": "site-contents",
+    "displayName": "Site Content",
+    "description": "Platform figures and stat sentences the templates print (DAVID-14). Publishing purges the site cache; pages rebuild within minutes."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "figures": {
+      "type": "component",
+      "repeatable": true,
+      "component": "site.figure"
+    },
+    "blocks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "site.block"
+    }
+  }
+}

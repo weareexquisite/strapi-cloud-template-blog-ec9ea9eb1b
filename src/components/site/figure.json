@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_site_figures",
+  "info": {
+    "displayName": "figure",
+    "icon": "chartLine",
+    "description": "One platform statistic. Templates render it with fig(key) and always alongside period(key)."
+  },
+  "options": {},
+  "attributes": {
+    "key": {
+      "type": "string",
+      "required": true,
+      "regex": "^[a-z][a-z0-9_]*$"
+    },
+    "value": {
+      "type": "string",
+      "required": true
+    },
+    "period": {
+      "type": "string",
+      "required": true
+    },
+    "source": {
+      "type": "string"
+    },
+    "updated_on": {
+      "type": "datetime",
+      "required": true
+    }
+  }
+}

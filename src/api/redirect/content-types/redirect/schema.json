@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "redirects",
+  "info": {
+    "singularName": "redirect",
+    "pluralName": "redirects",
+    "displayName": "Redirect",
+    "description": "Site redirects (DAVID-14). Served before page resolution - a redirect wins over a live page - and excluded from the sitemap. Publish to apply."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "from": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "to": {
+      "type": "string",
+      "required": true
+    },
+    "type": {
+      "type": "integer",
+      "default": 301,
+      "required": true,
+      "min": 301,
+      "max": 302
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "note": {
+      "type": "string"
+    }
+  }
+}

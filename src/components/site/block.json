@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_site_blocks",
+  "info": {
+    "displayName": "block",
+    "icon": "paragraph",
+    "description": "A sentence or short paragraph a template prints via block(key). May contain {fig:KEY} and {period:KEY} tokens."
+  },
+  "options": {},
+  "attributes": {
+    "key": {
+      "type": "string",
+      "required": true,
+      "regex": "^[a-z][a-z0-9_]*$"
+    },
+    "text": {
+      "type": "text",
+      "required": true
+    },
+    "updated_on": {
+      "type": "datetime",
+      "required": true
+    }
+  }
+}
