@@ -12,6 +12,12 @@
  *
  * Only checked when the write carries both lists (the admin form and a
  * full PUT always do); a partial update touching neither passes through.
+ *
+ * Runs as a document-service middleware (registered in src/index.js), not
+ * a lifecycle hook: in Strapi 5 a lifecycle on the parent type sees
+ * repeatable components only as row references ({id, __pivot}), never
+ * their keys or text - verified 7 Oct, after a live probe slipped through
+ * a lifecycle version of this check.
  */
 
 const { ValidationError } = require('@strapi/utils').errors;
@@ -56,7 +62,4 @@ function validate(data) {
   }
 }
 
-module.exports = {
-  beforeCreate(event) { validate(event.params.data); },
-  beforeUpdate(event) { validate(event.params.data); },
-};
+module.exports = { validate };
